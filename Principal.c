@@ -4,7 +4,7 @@
 
 #include "GrupoAlimentos.c"
 
-#include "Menu.c"
+#include "Navegacion.c"
 
 
 int main(void){
