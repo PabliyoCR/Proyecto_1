@@ -153,6 +153,7 @@ paciente * CrearNodo(int cedula, char nombre [50], int diaNacimiento, int mesNac
 	nuevo->diaIngreso=diaIngreso;
 	nuevo->mesIngreso=mesIngreso;
 	nuevo->anoIngreso=anoIngreso;		
+	nuevo->dieta = NULL;
 	return nuevo;
 }
 
