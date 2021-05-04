@@ -12,7 +12,7 @@ typedef struct ListaTiempos ListaTiempos;
 typedef struct Porcion Porcion;
 typedef struct ListaPorciones ListaPorciones;
 
-//Creación de estructuras
+//Creaciï¿½n de estructuras
 struct Dieta
 {
 	char fechaDieta; //fecha en la que se registra la dieta
@@ -189,7 +189,7 @@ void mostrarPila(const PilaDieta *P)
 
 
 //funcion main para probar las funciones 
-int main()
+/* int main()
 {
 	PilaDieta *P;
 	int res;
@@ -221,7 +221,7 @@ int main()
 	
 	
 	return 0;
-}
+} */
 
 
 

@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Pacientes.c"
 #include "GrupoAlimentos.c"
+#include "Pacientes.c"
+#include "Dieta.c"
 
 #include "Navegacion.c"
 

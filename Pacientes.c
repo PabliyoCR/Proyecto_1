@@ -13,7 +13,8 @@ typedef struct paciente{
 	int diaIngreso;
 	int mesIngreso;
 	int anoIngreso;
-	struct paciente *pacienteSiguiente
+	struct paciente *pacienteSiguiente;
+	PilaDieta *dieta;
 }paciente;
 
 typedef struct recorrer{
@@ -28,7 +29,7 @@ recorrer *Insertar(recorrer * C, int cedula,char nombre [50],int diaNacimiento,i
 void ImprimirCola(recorrer *C);
 //recorrer *Eliminar(recorrer * C, char Auxiliar[30]);
 void ImprimirColaReducida(recorrer *C);
-void buscar(recorrer *C);
+paciente *buscar_paciente_por_cedula(recorrer *C, int cedula);
 
 void getionPaciente () 
 {
@@ -211,7 +212,7 @@ void ImprimirColaReducida(recorrer *C)
 	printf("\n");
 }
 
-/*void buscar(recorrer *C)  incompleto
+paciente *buscar_paciente_por_cedula(recorrer *C, int cedula)
 {
 	paciente *i;
 	int contador=0;
@@ -224,14 +225,14 @@ void ImprimirColaReducida(recorrer *C)
 	{
 		for(i = C->front; i!= NULL; i = i->pacienteSiguiente)
 		{
-			if (cedula==scanf_s ("%i",&cedula))
+			if (i->cedula == cedula)
 			{
-				ImprimirCola(C);
+				return i;
 			}
 		}	contador++;
-		
 	}
-}/*
+	return i;
+}
 
 				
 /* Eliminar elemento
