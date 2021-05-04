@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "Pacientes.c"
 #include "GrupoAlimentos.c"
 
 #include "Navegacion.c"

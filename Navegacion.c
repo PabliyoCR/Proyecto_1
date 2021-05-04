@@ -1,6 +1,5 @@
 int op;
 int opListasIntercambio;
-int op2;
 
 void menuPrincipal(ListaGrupos *LG){
     while(op != 4){
@@ -15,7 +14,7 @@ void menuPrincipal(ListaGrupos *LG){
         if(op == 1)
             menuListasDeIntercambio(LG);
         if(op == 2)
-            menuPaciente();
+            getionPaciente();
         if(op == 3)
             menuAnalisis();
         fflush(stdin);
@@ -49,27 +48,6 @@ void menuListasDeIntercambio(ListaGrupos *LG){
         }
         fflush(stdin);
     }   
-}
-
-void menuPaciente(){
-    while(op2 != 11){
-        system("cls");
-        printf("--- MENU PACIENTES ---\n\n");
-        printf("1. Registrar Paciente\n");
-        printf("2. Modificar Información de Paciente\n");
-        printf("3. Consultar Información de Paciente\n");
-        printf("4. Eliminar Información de Paciente\n");
-        printf("5. Registrar Dieta para Paciente\n");
-        printf("6. Consultar Dietas de Paciente\n");
-        printf("7. Generar Menús para Paciente\n");
-        printf("8. Consultar Menús de Paciente\n");
-        printf("9. Registrar Control de Paciente\n");
-        printf("10. Consultar Control de Paciente\n");
-        printf("11. Regresar\n");
-        printf("\n Ingresa una opcion: ");
-        scanf("%i", &op2);
-        fflush(stdin);
-    } 
 }
 
 void menuAnalisis(){
