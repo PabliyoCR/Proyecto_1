@@ -5,7 +5,11 @@ typedef struct ListaGrupos ListaGrupos;
 typedef struct Grupo Grupo;
 
 
+<<<<<<< HEAD
 // comentario TEST
+=======
+// Otro comentario
+>>>>>>> dc98a4d654c7182b6a5f09eedc983ee6ce3239bf
 
 struct Alimento
 {
