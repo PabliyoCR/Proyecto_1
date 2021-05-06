@@ -5,6 +5,8 @@ typedef struct ListaGrupos ListaGrupos;
 typedef struct Grupo Grupo;
 
 
+// comentario TEST
+
 struct Alimento
 {
     char codigoAlimento[10];
