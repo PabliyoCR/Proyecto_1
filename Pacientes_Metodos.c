@@ -1,28 +1,4 @@
 
-typedef struct paciente{
-	int cedula;
-	char nombre[50];
-	int diaNacimiento;
-	int mesNacimiento;
-	int anoNacimiento;
-	float pesoActual;
-	float pesoMeta;
-	float estatura;
-	float indiceMasaCorporal;
-	float porcentajeGrasa;
-	int diaIngreso;
-	int mesIngreso;
-	int anoIngreso;
-	struct paciente *pacienteSiguiente;
-	PilaDieta *dieta;
-}paciente;
-
-typedef struct recorrer{
-	int size;
-	paciente * front;
-	paciente * rear;
-}recorrer;
-
 recorrer *crearPaciente(recorrer * C);
 paciente *CrearNodo(int cedula,char nombre [50],int diaNacimiento,int mesNacimiento,int anoNacimiento,float pesoActual,float pesoMeta,float estatura,float indiceMasaCorporal,float porcentajeGrasa,int diaIngreso,int mesIngreso,int anoIngreso);
 recorrer *Insertar(recorrer * C, int cedula,char nombre [50],int diaNacimiento,int mesNacimiento,int anoNacimiento,float pesoActual,float pesoMeta,float estatura,float indiceMasaCorporal,float porcentajeGrasa,int diaIngreso,int mesIngreso,int anoIngreso);
@@ -31,7 +7,7 @@ void ImprimirCola(recorrer *C);
 void ImprimirColaReducida(recorrer *C);
 paciente *buscar_paciente_por_cedula(recorrer *C, int cedula);
 
-void getionPaciente () 
+void gestionPaciente () 
 {
 	recorrer * C= crearPaciente(C);
 	int cedula;
@@ -56,7 +32,7 @@ void getionPaciente ()
 	printf ("\n3. Consultar informacion de paciente.");
 	printf ("\n4. Salir.");
 	printf ("\n\nIngrese el numero de la accion que desea realizar:  ");
-	scanf_s ("%d", &opcion);
+	scanf ("%d", &opcion);
 	
 	while (opcion != 4)
 	{
@@ -65,31 +41,31 @@ void getionPaciente ()
 		{
 		
 			printf ("\nDigite el numero de cedula");
-			scanf_s ("%i",&cedula);	
+			scanf("%i",&cedula);	
 			printf ("Digite su nombre: ");
-			scanf_s ("%s",&nombre);
+			scanf("%s",&nombre);
 			printf ("Digite su dia de nacimiento: ");
-			scanf_s ("%i",&diaNacimiento);
+			scanf ("%i",&diaNacimiento);
 			printf ("Digite su mes de nacimiento: ");
-			scanf_s ("%i",&mesNacimiento);
+			scanf ("%i",&mesNacimiento);
 			printf ("Digite su ano de nacimiento: ");
-			scanf_s ("%i",&anoNacimiento);
+			scanf ("%i",&anoNacimiento);
 			printf ("Digite su peso actual ");
-			scanf_s ("%f",&pesoActual);
+			scanf ("%f",&pesoActual);
 			printf ("Digite su peso meta: ");
-			scanf_s ("%f",&pesoMeta);
+			scanf ("%f",&pesoMeta);
 			printf ("Digite su estatura: ");
-			scanf_s ("%f",&estatura);
+			scanf ("%f",&estatura);
 			printf ("Digite su Indice de masa corporal: ");
-			scanf_s ("%f",&indiceMasaCorporal);
+			scanf ("%f",&indiceMasaCorporal);
 			printf ("Digite su porcentaje de grasa: ");
-			scanf_s ("%f",&porcentajeGrasa);
+			scanf ("%f",&porcentajeGrasa);
 			printf ("Digite su dia de ingreso ");
-			scanf_s ("%i",&diaIngreso);
+			scanf ("%i",&diaIngreso);
 			printf ("Digite su mes de ingreso ");
-			scanf_s ("%i",&mesIngreso);
+			scanf ("%i",&mesIngreso);
 			printf ("Digite su Ano de ingreso: ");
-			scanf_s ("%i",&anoIngreso);
+			scanf ("%i",&anoIngreso);
 			C= (Insertar(C,cedula,nombre,diaNacimiento,mesNacimiento,anoNacimiento,pesoActual,pesoMeta,estatura,indiceMasaCorporal,porcentajeGrasa,diaIngreso,mesIngreso,anoIngreso));
 		}
 		
@@ -102,7 +78,7 @@ void getionPaciente ()
 		{
 			ImprimirColaReducida(C);
 			/*printf ("Digite el numero de cedula del paciente a consultar");   FUNCION PARA BUSCAR INCOMPLETA
-			scanf_s ("%i",&cedula);	
+			scanf ("%i",&cedula);	
 			buscar(C);*/
 			
 		}
@@ -113,7 +89,7 @@ void getionPaciente ()
 		}
 		
 		printf ("\n\nSi desea realizar otra accion ingrese el numero:  ");
-		scanf_s ("%d", &opcion);
+		scanf ("%d", &opcion);
 	}
 }
 
@@ -216,8 +192,7 @@ void ImprimirColaReducida(recorrer *C)
 paciente *buscar_paciente_por_cedula(recorrer *C, int cedula)
 {
 	paciente *i;
-	int contador=0;
-	int cedula;
+	int contador = 0;
 	if (C -> front == NULL)
 	{
 		printf ("\nERROR: No hay pacientes agregados");
