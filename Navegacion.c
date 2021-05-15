@@ -14,7 +14,7 @@ void menuPrincipal(ListaGrupos *LG){
         if(op == 1)
             menuListasDeIntercambio(LG);
         if(op == 2)
-            getionPaciente();
+            gestionPaciente();
         if(op == 3)
             menuAnalisis();
         fflush(stdin);
