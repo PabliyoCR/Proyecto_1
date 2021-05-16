@@ -95,22 +95,23 @@ void crearPaciente()
 	aux->diaIngreso = diaIngreso;
 	aux->mesIngreso=mesIngreso;
 	aux->anoIngreso=anoIngreso;*/
-	aux->dieta = NULL;
+	aux->pilaDieta = NULL;
 	aux->pacienteSiguiente = NULL;
 }
 
 // menu gestion de pacientes
 void gestionPaciente(){
 	int opcion;
-	while (opcion != 5)
+	while (opcion != 6)
 	{
 		system("cls");
     	printf("--- MENU PACIENTES ---\n");
 		printf ("\n1. Agregar Paciente.");
 		printf ("\n2. Consultar Informacion del Paciente.");
-		printf ("\n3. Modificar Paciente.");
-		printf ("\n4. Eliminar Paciente.");
-		printf ("\n5. Volver.");
+		printf ("\n3. Gestionar dietas asociadas al Paciente.");
+		printf ("\n4. Modificar Paciente.");
+		printf ("\n5. Eliminar Paciente.");
+		printf ("\n6. Volver.");
 		printf ("\n\nIngrese el numero de la accion que desea realizar:  ");
 		scanf ("%i", &opcion);
 		switch(opcion){
@@ -120,10 +121,13 @@ void gestionPaciente(){
             case 2:
                 imprimirInfoPaciente(menuSeleccionaPaciente());
                 break;
-            case 3:
-				actualizarPaciente();
+			case 3:
+                //gestionDienta();
                 break;
             case 4:
+				actualizarPaciente();
+                break;
+            case 5:
 				eliminarPaciente();
                 break;
         }
@@ -234,7 +238,7 @@ void eliminarPaciente(){
         printf("ALERTA: El Paciente ingresado No Existe en los registros.");
         return;
     }
-	if(paciente->dieta != NULL /* || paciente->menu != NULL || paciente->control != NULL */){
+	if(paciente->pilaDieta != NULL /* || paciente->menu != NULL || paciente->control != NULL */){
 		printf("ALERTA: Imposible eliminar Paciente porque tiene asociadas dietas, menus y controles.");
 		printf("\n\nPrecione enter para continuar... ");
 		fflush(stdin);

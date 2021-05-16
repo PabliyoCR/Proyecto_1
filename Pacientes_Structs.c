@@ -18,7 +18,7 @@ struct Paciente{
 	int mesIngreso;
 	int anoIngreso;
 
-	PilaDieta *dieta;
+	PilaDieta *pilaDieta;
 	//QueueMenu *menu;
 	//PilaControl *control
 

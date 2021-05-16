@@ -38,7 +38,7 @@ struct ListaTiempos
 struct Porcion
 {
 	int cantidad;
-//	Grupo *grupoAlimenticio;
+	Grupo *grupoAlimenticio;
 	Porcion *porcionSiguiente;
 };
 
