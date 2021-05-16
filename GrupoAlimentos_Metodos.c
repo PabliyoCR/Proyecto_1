@@ -191,7 +191,7 @@ void consultarAlimentosEnGrupo(){
     }
     ListaAlimentos *LA = grupoAlimenticio->listaAlimentos;
     imprimirListaALimentos(LA);
-    printf("\n\nPrecione cualquier tecla para continuar... ");
+    printf("\n\nPrecione enter para continuar... ");
     fflush(stdin);
     getchar();
 }
@@ -301,7 +301,7 @@ int menuSeleccionaGrupo(){
     scanf("%i", &opGrupo);
     if(opGrupo >= number || opGrupo <= 0){
         if(opGrupo != number){
-            printf("\nOpción invalida. Precione cualquier tecla para continuar...");
+            printf("\nOpción invalida. Precione enter para continuar...");
             fflush(stdin);
             getchar();
         }

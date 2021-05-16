@@ -2,13 +2,14 @@
 ListaPacientes *listaPacientesNueva(void);
 void crearPaciente(void);
 void consultarPaciente(void);
+void gestionPaciente(void);
+Paciente *menuSeleccionaPaciente(void);
+Paciente *buscar_paciente_por_cedula(int cedula);
+void imprimirInfoPaciente(Paciente *P);
 void actualizarPaciente(void);
 void eliminarPaciente(void);
-void verificarRelacionDietaMenuControl(void);
-void gestionPaciente(void);
-void menuSeleccionaPaciente(void);
-Paciente *buscar_paciente_por_cedula(int cedula);
 
+// metodo para crear pacientes nuevos
 ListaPacientes *listaPacientesNueva(void)
 {
     ListaPacientes *L;
@@ -17,6 +18,7 @@ ListaPacientes *listaPacientesNueva(void)
     return L;
 }
 
+// crea un paciente nuevo por medio de un menu de navegacion
 void crearPaciente()
 {
 	system("cls");
@@ -60,7 +62,7 @@ void crearPaciente()
 	scanf ("%i",&mesNacimiento);
 	printf ("\nDigite su ano de nacimiento: ");
 	scanf ("%i",&anoNacimiento); */
-	printf ("\nDigite su peso actual ");
+	printf ("\nDigite su peso actual: ");
 	scanf ("%f",&pesoActual);
 	printf ("\nDigite su peso meta: ");
 	scanf ("%f",&pesoMeta);
@@ -97,6 +99,7 @@ void crearPaciente()
 	aux->pacienteSiguiente = NULL;
 }
 
+// menu gestion de pacientes
 void gestionPaciente(){
 	int opcion;
 	while (opcion != 5)
@@ -115,20 +118,21 @@ void gestionPaciente(){
                 crearPaciente();
                 break;
             case 2:
-                menuSeleccionaPaciente();
+                imprimirInfoPaciente(menuSeleccionaPaciente());
                 break;
             case 3:
-
+				actualizarPaciente();
                 break;
             case 4:
-
+				eliminarPaciente();
                 break;
         }
 		fflush(stdin);
 	}
 }
 
-void menuSeleccionaPaciente(){
+// menu que imprime todos los pacientes disponibles y pregunta cual paciente se desea seleccionar por número de cedula
+Paciente *menuSeleccionaPaciente(){
 
     Paciente *n;
     n = LP->inicio;
@@ -140,18 +144,15 @@ void menuSeleccionaPaciente(){
     }
 
     int cedulaPaciente;
-    printf("\n\nIngrese la cedula del paciente a consultar, o precione enter para regresar: ");
+    printf("\n\nIngrese la cedula del paciente a consultar: ");
     scanf("%i", &cedulaPaciente);
 	if(cedulaPaciente == NULL){
 		return;
 	}
-	n = buscar_paciente_por_cedula(cedulaPaciente);
-	if(n != NULL){
-		imprimirInfoPaciente(n);
-	}
+	return buscar_paciente_por_cedula(cedulaPaciente);
 }
 
-
+// Devuelve un puntero de tipo Paciente en funcion de una cedula dada
 Paciente *buscar_paciente_por_cedula(int cedula)
 {
 	Paciente *n;
@@ -164,25 +165,108 @@ Paciente *buscar_paciente_por_cedula(int cedula)
 	if(n == NULL){
 		system("cls");
 		printf ("\nERROR: No hay pacientes agregados con la cedula dada.");
-		printf("\n\nPrecione cualquier tecla para continuar... ");
+		printf("\n\nPrecione enter para continuar... ");
 		fflush(stdin);
     	getchar();
 	}
 	return n;
 }
 
+// Imprime en pantalla los datos relacionados a un paciente dado (pasado por parametro)
 void imprimirInfoPaciente(Paciente *P){
+	if(P == NULL){
+		return;
+	}
     system("cls");
     printf("--- PACIENTE ---\n");
 	printf("\n Nombre: %s", P->nombre);
 	printf("\n Cedula: %i", P->cedula);
 	printf("\n Peso Actual: %f", P->pesoActual);
 	printf("\n Peso Meta: %f", P->pesoMeta);
-	printf("\n\nPrecione cualquier tecla para continuar... ");
+	printf("\n\nPrecione enter para continuar... ");
     fflush(stdin);
     getchar();
 }
 
+// actualiza los datos de un paciente a excepcion de su cedula
+void actualizarPaciente(){
+	system("cls");
+    printf("--- ACTUALIZAR PACIENTE ---\n");
+    Paciente *paciente;
+    paciente = menuSeleccionaPaciente();
+	if(paciente == NULL){
+        printf("El Paciente ingresado No Existe en los registros.");
+        return;
+    }
+	int opModificar;
+    while(opModificar != 4){
+        system("cls");
+    	printf("--- ACTUALIZAR PACIENTE ---\n");
+        printf("\n1. Modificar Nombre");
+		printf("\n2. Modificar Peso Actual");
+		printf("\n3. Modificar Peso Meta");
+        printf("\n4. Regresar...");
+        printf("\n Ingresa una opcion: ");
+        scanf("%i", &opModificar);
+        if(opModificar == 1){
+            printf("\nIngrese el nuevo nombre: ");
+            scanf("%s", &paciente->nombre);
+        }
+        if(opModificar == 2){
+            printf("\nIngrese el nuevo peso actual: ");
+            scanf("%f", &paciente->pesoActual);
+        }
+		if(opModificar == 3){
+            printf("\nIngrese el nuevo peso meta: ");
+            scanf("%f", &paciente->pesoMeta);
+        }
+        fflush(stdin);
+    }
+}
 
-
-
+// elimina un paciente dado. La variable paciente apunta al espacio en memoria de un pasiente obtenido mediante menuSeleccionaPaciente()
+void eliminarPaciente(){
+	system("cls");
+    printf("--- ELIMINAR PACIENTE ---\n");
+	Paciente *paciente, *aux, *anterior;
+    paciente = menuSeleccionaPaciente();
+	if(paciente == NULL){
+        printf("ALERTA: El Paciente ingresado No Existe en los registros.");
+        return;
+    }
+	if(paciente->dieta != NULL /* || paciente->menu != NULL || paciente->control != NULL */){
+		printf("ALERTA: Imposible eliminar Paciente porque tiene asociadas dietas, menus y controles.");
+		printf("\n\nPrecione enter para continuar... ");
+		fflush(stdin);
+		getchar();
+        return;
+	}
+	aux = LP->inicio;
+	if(aux != NULL){
+        if(aux->pacienteSiguiente == NULL){
+            if(aux == paciente){
+                LP->inicio = NULL;
+            }else{
+                aux == NULL;
+            }
+        }else{
+            while(aux != NULL){
+                if(aux == paciente){
+                    if(aux == LP->inicio){
+                        LP->inicio = aux->pacienteSiguiente;
+                        break;
+                    }else{
+                        anterior->pacienteSiguiente = aux->pacienteSiguiente;
+                        break;
+                    }
+                }else{
+                    anterior = aux;
+                    aux = aux->pacienteSiguiente;
+                }
+            }
+        }
+    }
+	if(aux != NULL){
+        free(aux);
+    }
+}

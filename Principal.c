@@ -8,6 +8,7 @@
 #include "Dieta_Structs.c"
 #include "Pacientes_Structs.c"
 
+// Listas Globales de Grupos de Alimentos y Pacientes
 ListaGrupos *LG = NULL;
 ListaPacientes *LP = NULL;
 
