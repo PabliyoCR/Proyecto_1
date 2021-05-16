@@ -8,75 +8,175 @@
 
 //Funciones en proceso
 
-PilaDieta *pilaNueva(void)
+PilaDieta *pilaNueva(int ced)
 {
 	PilaDieta *P;
 	P=(PilaDieta *) malloc(sizeof(PilaDieta));
 	P->tope=NULL;
 	P->size=0;
+	P->cedulaPaciente= ced;
 	return P;
 }
 
-Dieta* dietaNueva(char fechaDieta, float pesoActual, char tiempoComida)
+Dieta* dietaNueva(void)
 {
 	Dieta *nuevo;
 	nuevo= (Dieta *) malloc(sizeof(Dieta));
+	
 	nuevo->dietaSiguiente=NULL;
-	nuevo->fechaDieta = fechaDieta;
-	nuevo->pesoActual= pesoActual;
-	nuevo->tiempoComida;
+	
+	printf("\nIngrese la fecha en la que va a registrar esta Dieta: \n");
+	scanf("%s",&nuevo->fechaDieta);
+	printf("\nIngrese el peso actual del paciente a registrar: \n");
+	scanf("%.1f",&nuevo->pesoActual);
+	/*printf("\nIngrese el tiempo de comida que desea registrar (Desayuno, Merienda, Almuerzo, otros): \n");
+	scanf("%s",&nuevo->tiempoComida);*/
+
+	
 	
 	return nuevo;
 }
 
 
-void push(PilaDieta *P,int ced , char fechaDieta, float pesoActual, char tiempoComida)
+Tiempo* tiempoNuevo()
 {
-	Dieta *nueva= dietaNueva(fechaDieta, pesoActual, tiempoComida );
-	
-	nueva->dietaSiguiente= P->tope;
-	P->tope= nueva;
-	P->size= P->size+1;
-	
-	return;
+	Tiempo *nuevo;
+	nuevo= (Tiempo *) malloc(sizeof(Tiempo));
+	nuevo->tiempoSiguiente=NULL;
+	printf("\nIngrese el tiempo de comida que desea registrar (Desayuno, Merienda, Almuerzo, otros): \n");
+	scanf("%s",&nuevo->nombreTiempo);
+	return nuevo;
 }
+
+Porcion *porcionNueva(void)
+{
+	Porcion *nuevo;
+    nuevo = (Porcion *) malloc(sizeof(Porcion));
+	nuevo->porcionSiguiente=NULL;
+
+    return nuevo;
+}
+
+
+
+ListaTiempos *listaTiemposNueva(void)
+{
+    ListaTiempos *L;
+    L = (ListaTiempos *) malloc(sizeof(ListaTiempos));
+    L->inicio = NULL;
+    return L;
+}
+
+
+
+ListaPorciones *listaPorcionesNueva(void)
+{
+    ListaPorciones *L;
+    L = (ListaPorciones *) malloc(sizeof(ListaPorciones));
+    L->inicio = NULL;
+    return L;
+}
+
+
+
 
 
 //Funcion para crear Dietas-- Incompleta 
 void crearDieta(int cedula) // 
 {
+	paciente *ptr;
+	recorrer *C;
+	ptr= buscar_paciente_por_cedula(C,cedula);
 	
-	int ced=cedula;
-	PilaDieta *P;
-	
-	P->cedulaPaciente= ced;
-//	Paciente *ptr;
-	int cantidadTiempos;
-	printf("\nIndique cuantos tiempos de comida desea registrar: \n");
-	scanf("%d",&cantidadTiempos);
-	if (cantidadTiempos<3)
-	{
-		printf("\nLo sentimos los tiempos de comida deben ser minimo 3.\n");
+	if (ptr->dieta==NULL){
+		ptr->dieta= pilaNueva(cedula);
+		
+		int cantidadTiempos;
+		printf("\nIndique cuantos tiempos de comida desea registrar: \n");
+		scanf("%d",&cantidadTiempos);
+		if (cantidadTiempos<3)
+		{
+			printf("\nLo sentimos los tiempos de comida deben ser minimo 3.\n");
+			return;
+		}
+		else if (cantidadTiempos>6)
+		{
+			printf("\nLo sentimos los tiempos de comida deben ser maximo 6.\n");
+			return;
+		}
+
+		
+
+		/* int resultado = menuSeleccionaGrupo();
+			// imprime un meno para que el usuario escoga grupo
+
+		Grupo *grupoAlimento = obtenerGrupoEnPosicion(resultado); 
+			// captura el grupo
+		*/
+
+		Dieta *nueva= dietaNueva();
+		nueva->dietaSiguiente= ptr->dieta->tope;
+		ptr->dieta->tope= nueva;
+		ptr->dieta->size= ptr->dieta->size + 1;
+		
+		ListaTiempos *LT = listaTiemposNueva();
+		nueva->listaTiempos = LT;
+		
+		int i = 3;
+		while(i <= cantidadTiempos){
+			Tiempo *T = tiempoNuevo();
+			//LT.agregarTiempo(T);
+
+			ListaPorciones *LP = listaPorcionesNueva();
+			T->listaPorciones = LP;
+			int cantidadPorciones;
+			printf("\nIndique cuantos porciones que desea registrar: \n");
+			scanf("%d",&cantidadPorciones);
+
+			int j = 0;
+			while(j < cantidadPorciones){
+				Porcion *P = porcionNueva();
+				//LP.agregarPorcion(P);
+				j++;
+			}
+			i++;
+		}
+
 		return;
 	}
-	else if (cantidadTiempos>6)
+	else
 	{
-		printf("\nLo sentimos los tiempos de comida deben ser maximo 6.\n");
+		int cantidadTiempos;
+		printf("\nIndique cuantos tiempos de comida desea registrar: \n");
+		scanf("%d",&cantidadTiempos);
+		if (cantidadTiempos<3)
+		{
+			printf("\nLo sentimos los tiempos de comida deben ser minimo 3.\n");
+			return;
+		}
+		else if (cantidadTiempos>6)
+		{
+			printf("\nLo sentimos los tiempos de comida deben ser maximo 6.\n");
+			return;
+		}
+		
+		
+		Dieta *nueva= dietaNueva();
+		nueva->dietaSiguiente= ptr->dieta->tope;
+		ptr->dieta->tope= nueva;
+		ptr->dieta->size= ptr->dieta->size + 1;
+		
+		
+		
+		
+		
+	
 		return;
+	
 	}
 	
-	int contador=0;
-	
-	for( contador; contador != cantidadTiempos; contador++) 
-	{
-		printf("\nIngrese el tiempo %d de comida(Desayuno, Almuerzo, Merienda, Cena, otro): \n",contador+1);
-		scanf("%s",&P->tope->tiempoComida);
-
-
-	}
 	return;
-	}	
-	
+}
 
 
 

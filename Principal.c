@@ -8,6 +8,8 @@
 #include "Dieta_Structs.c"
 #include "Pacientes_Structs.c"
 
+ListaGrupos *LG = NULL;
+
 // Definicion de metodos
 #include "GrupoAlimentos_Metodos.c"
 #include "Pacientes_Metodos.c"
@@ -16,13 +18,12 @@
 // Menu de navegacion
 #include "Navegacion.c"
 
-
 int main(void){
-    
-    ListaGrupos *LG;
-    LG = listaGruposNueva();
 
-    menuPrincipal(LG);
+    LG = listaGruposNueva();
+    precargaDeDatos();
+
+    menuPrincipal();
 
     return 0;
 }

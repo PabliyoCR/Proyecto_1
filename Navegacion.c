@@ -1,7 +1,7 @@
 int op;
 int opListasIntercambio;
 
-void menuPrincipal(ListaGrupos *LG){
+void menuPrincipal(){
     while(op != 4){
         system("cls");
         printf("--- MENU PRINCIPAL ---\n\n");
@@ -21,7 +21,7 @@ void menuPrincipal(ListaGrupos *LG){
     }   
 }
 
-void menuListasDeIntercambio(ListaGrupos *LG){
+void menuListasDeIntercambio(){
     while(opListasIntercambio != 5){
         system("cls");
         printf("--- MENU LISTAS DE INTERCAMBIO ---\n\n");
@@ -34,16 +34,16 @@ void menuListasDeIntercambio(ListaGrupos *LG){
         scanf("%i", &opListasIntercambio);
         switch(opListasIntercambio){
             case 1:
-                consultarAlimentosEnGrupo(LG);
+                consultarAlimentosEnGrupo();
                 break;
             case 2:
-                crearGrupo(LG);
+                crearGrupo(NULL, NULL);
                 break;
             case 3:
-                actualizarAlimento(LG);
+                actualizarAlimento();
                 break;
             case 4:
-                eliminarAlimento(LG);
+                eliminarAlimento();
                 break;
         }
         fflush(stdin);

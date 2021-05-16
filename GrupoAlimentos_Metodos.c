@@ -1,18 +1,21 @@
 
-
 ListaAlimentos *listaAlimentosNueva(void);
 ListaGrupos *listaGruposNueva(void);
-void crearGrupo(ListaGrupos *LG);
-void crearAlimento(ListaAlimentos *LA);
-void actualizarAlimento(ListaGrupos *LG);
-void eliminarAlimento(ListaGrupos *LG);
-void consultarAlimentosEnGrupo(ListaGrupos *LG);
+void crearGrupo(char nombre[100], ListaAlimentos *LA);
+void crearStructGrupo(ListaAlimentos *LA, Grupo *G, char nombre[100]);
+void crearAlimento(ListaAlimentos *LA, char nombre[100], float tamagnio, char codigo[10]);
+void crearStructAlimento(Alimento *A, char nombre[100], float tamagnio, char codigo[10]);
+void actualizarAlimento();
+void eliminarAlimento();
+void consultarAlimentosEnGrupo();
 void agregarDatosListaAlimentos(ListaAlimentos *LA);
 void imprimirListaALimentos(ListaAlimentos *LA);
-Grupo *obtenerGrupoEnPosicion(ListaGrupos *LG, int posicion);
+Grupo *obtenerGrupoEnPosicion(int posicion);
 Alimento *buscarAlimentoPorCodigo(Grupo *G, char *ptrCodigo);
-int menuSeleccionaGrupo(Grupo *G);
+int menuSeleccionaGrupo();
 int verificaCodigoUnico(ListaAlimentos *LA, char *ptrCodigo);
+void precargaDeDatos();
+
 
 /*
 Crea una lista simple de alimentos
@@ -39,42 +42,56 @@ ListaGrupos *listaGruposNueva(void)
 /*
 crea un nodo alimento asociado a una lista de alimentos dada
 */
-void crearAlimento(ListaAlimentos *LA){
+void crearAlimento(ListaAlimentos *LA, char nombre[100], float tamagnio, char codigo[10]){
     system("cls");
     printf("--- CREAR ALIMENTO ---\n");
     Alimento *n, *aux;
     if(LA->inicio == NULL)
     {
         LA->inicio = (Alimento *) malloc(sizeof(Alimento));
+        aux = LA->inicio;
+    }else{
+        n = LA->inicio;
+        while(n!= NULL)
+        {
+            aux = n;
+            n = n->alimentoSiguiente;
+        }
+        aux->alimentoSiguiente = (Alimento *) malloc(sizeof(Alimento));
+        aux = aux->alimentoSiguiente;
+    }
+
+    if(nombre == NULL){
+        char nombre_aux[100];
+        char codigo_aux[10];
         printf("\nIngrese Nombre del alimento: ");
-        scanf("%s", &LA->inicio->nombreAlimento);
+        scanf("%s", &nombre_aux);
         printf("\nIngrese Tamano de porcion: ");
-        scanf("%f", &LA->inicio->tamagnioPorcion);
-        printf("\nIngrese Codigo del alimento: ");
-        scanf("%s", &LA->inicio->codigoAlimento);
-        LA->inicio->alimentoSiguiente = NULL;
-        return;
+        scanf("%f", &tamagnio);
+        int valido;
+        do{
+            printf("\nIngrese Codigo del alimento: ");
+            scanf("%s", &codigo_aux);
+            valido = verificaCodigoUnico(LA, codigo_aux);
+            
+            if(valido == 0){
+                printf("\nDenegado. El codigo ingresado ya se encuentra registrado. Intente de nuevo");
+            }
+        }while(valido != 1);
+        crearStructAlimento(aux, nombre_aux, tamagnio, codigo_aux);
+    }else{
+        crearStructAlimento(aux, nombre, tamagnio, codigo);
     }
-    n = LA->inicio;
-    while(n!= NULL)
-    {
-        aux = n;
-        n = n->alimentoSiguiente;
-    }
-    aux->alimentoSiguiente = (Alimento *) malloc(sizeof(Alimento));
-    int valido = -1;
-    printf("\nIngrese Nombre del alimento: ");
-    scanf("%s", &aux->alimentoSiguiente->nombreAlimento);
-    printf("\nIngrese Tamano de porcion: ");
-    scanf("%f",&aux->alimentoSiguiente->tamagnioPorcion);
-    do{
-        if(valido == 0)
-            printf("\nDenegado. El codigo ingresado ya se encuentra registrado. Intente de nuevo");
-        printf("\nIngrese Codigo del alimento: ");
-        scanf("%s", &aux->alimentoSiguiente->codigoAlimento);
-        valido = verificaCodigoUnico(LA, aux->alimentoSiguiente->codigoAlimento);
-    }while(valido != 1);
-    aux->alimentoSiguiente->alimentoSiguiente = NULL;
+}
+
+/*
+Función llamada para asignar valores a un nuevo Alimento
+*/
+void crearStructAlimento(Alimento *A, char nombre[100], float tamagnio, char codigo[10]){
+    strcpy(A->nombreAlimento, nombre);
+    A->tamagnioPorcion = tamagnio;
+    strcpy(A->codigoAlimento, codigo);
+    A->alimentoSiguiente = NULL;
 }
 
 /*
@@ -83,6 +100,9 @@ verifica que el código de alimento ingresado por el ususario no sea duplicado
 int verificaCodigoUnico(ListaAlimentos *LA, char *ptrCodigo){
     Alimento *n;
     n = LA->inicio;
+    if(n == NULL){
+        return 1;
+    }
     while(n->alimentoSiguiente != NULL)
     {
         if(strcmp(n->codigoAlimento, ptrCodigo) == 0){
@@ -96,36 +116,46 @@ int verificaCodigoUnico(ListaAlimentos *LA, char *ptrCodigo){
 /*
 crea un nodo grupo asociado a una lista de grupos. A su vez, cada grupo anida una lista de alimentos
 */
-void crearGrupo(ListaGrupos *LG){
+void crearGrupo(char nombre[100], ListaAlimentos *LA){
     system("cls");
     printf("--- CREAR GRUPO DE ALIMENTOS ---\n");
-    ListaAlimentos *LA;
-    LA = listaAlimentosNueva();
-
     Grupo *n, *aux;
     if(LG->inicio == NULL)
     {
         LG->inicio = (Grupo *) malloc(sizeof(Grupo));
+        aux = LG->inicio;
+    }else{
+        n = LG->inicio;
+        while(n!= NULL)
+        {
+            aux = n;
+            n = n->grupoSiguiente;
+        }
+        aux->grupoSiguiente = (Grupo *) malloc(sizeof(Grupo));
+        aux = aux->grupoSiguiente;
+    }
+    if(nombre == NULL){
+        char nombre_aux[100];
+        ListaAlimentos *LA_aux;
+        LA_aux = listaAlimentosNueva();
         printf("\nIngrese Nombre del grupo alimenticio: ");
-        scanf("%s", &LG->inicio->nombreGrupo);
-        LG->inicio->listaAlimentos = LA;
-        LG->inicio->grupoSiguiente = NULL;
-        agregarDatosListaAlimentos(LA);
-        return;
+        scanf("%s", &nombre_aux);
+        crearStructGrupo(LA_aux, aux, nombre_aux);
+        agregarDatosListaAlimentos(LA_aux);
+    }else{
+        crearStructGrupo(LA, aux, nombre);
     }
-    n = LG->inicio;
-    while(n!= NULL)
-    {
-        aux = n;
-        n = n->grupoSiguiente;
-    }
-    aux->grupoSiguiente = (Grupo *) malloc(sizeof(Grupo));
-    printf("\nIngrese Nombre del grupo alimenticio: ");
-    scanf("%s", &aux->grupoSiguiente->nombreGrupo);
-    aux->grupoSiguiente->listaAlimentos = LA;
-    aux->grupoSiguiente->grupoSiguiente = NULL;
-    agregarDatosListaAlimentos(LA);
 }
+
+/*
+Función llamada para asignar valores a un nuevo Grupo
+*/
+void crearStructGrupo(ListaAlimentos *LA, Grupo *G, char nombre[100]){
+    strcpy(G->nombreGrupo, nombre);
+    G->listaAlimentos = LA;
+    G->grupoSiguiente = NULL;
+}
+
 
 /*
 Invoca menú que facilita agregar reiterados alimentos a una lista dada, o terminar de agregarlos
@@ -140,7 +170,7 @@ void agregarDatosListaAlimentos(ListaAlimentos *LA){
         printf("\n Ingresa una opcion: ");
         scanf("%i", &op);
         if(op == 1)
-            crearAlimento(LA);
+            crearAlimento(LA, NULL, 0, NULL);
         fflush(stdin);
     } 
 }
@@ -148,15 +178,14 @@ void agregarDatosListaAlimentos(ListaAlimentos *LA){
 /*
 Invoca menú que despliega los alimentos de un grupo dado
 */
-void consultarAlimentosEnGrupo(ListaGrupos *LG){
+void consultarAlimentosEnGrupo(){
+    system("cls");
+    printf("--- CONSULTAR LISTA DE INTERCAMBIO ---\n");
+    int opGrupo = menuSeleccionaGrupo();
     system("cls");
     printf("--- CONSULTAR LISTA DE INTERCAMBIO ---\n");
     Grupo *grupoAlimenticio;
-    grupoAlimenticio = LG->inicio;
-    int opGrupo = menuSeleccionaGrupo(grupoAlimenticio);
-    system("cls");
-    printf("--- CONSULTAR LISTA DE INTERCAMBIO ---\n");
-    grupoAlimenticio = obtenerGrupoEnPosicion(LG, opGrupo);
+    grupoAlimenticio = obtenerGrupoEnPosicion(opGrupo);
     if(grupoAlimenticio == NULL){
         printf("El grupo ingresado No Existe en los registros.");
         return;
@@ -175,22 +204,20 @@ void imprimirListaALimentos(ListaAlimentos *LA){
     Alimento *i;
     printf("\nCODIGO                 ALIMENTO                             TAMANO 1 PORCION");
     for(i = LA->inicio; i!= NULL; i = i->alimentoSiguiente){
-        printf("\n%s              %s                           %.2f", i->codigoAlimento, i->nombreAlimento, i->tamagnioPorcion);
+        printf("\n%s                    %s                            %.2f", i->codigoAlimento, i->nombreAlimento, i->tamagnioPorcion);
     }
 }
 
 /*
 Invoca un menú que facilita la actualización del nombre o porcion de un alimento dado
 */
-void actualizarAlimento(ListaGrupos *LG){
+void actualizarAlimento(){
     system("cls");
     printf("--- ACTUALIZAR ALIMENTO ---\n");
-    Grupo *n;
-    n = LG->inicio;
-    int opGrupo = menuSeleccionaGrupo(n);
+    int opGrupo = menuSeleccionaGrupo();
     system("cls");
     printf("--- ACTUALIZAR ALIMENTO ---\n");
-    Grupo *grupoAlimenticio = obtenerGrupoEnPosicion(LG, opGrupo);
+    Grupo *grupoAlimenticio = obtenerGrupoEnPosicion(opGrupo);
     ListaAlimentos *LA = grupoAlimenticio->listaAlimentos;
     imprimirListaALimentos(LA);
     char codigoAlimento[10];
@@ -227,7 +254,7 @@ void actualizarAlimento(ListaGrupos *LG){
 /*
 Devuelve un grupo de alimentos ubicado en una posición dada de una lista de grupos
 */
-Grupo *obtenerGrupoEnPosicion(ListaGrupos *LG, int posicion){
+Grupo *obtenerGrupoEnPosicion(int posicion){
     int idx = 1;
     Grupo *n;
     n = LG->inicio;
@@ -258,13 +285,17 @@ Alimento *buscarAlimentoPorCodigo(Grupo *G, char *ptrCodigo){
 /*
 Invoca un menú que facilita al usuario hacer referencia a uno de los grupos registrados
 */
-int menuSeleccionaGrupo(Grupo *G){
+int menuSeleccionaGrupo(){
     char number = 1;
-    while(G != NULL){
-        printf("\n%i. %s", number, G->nombreGrupo);
-        G = G->grupoSiguiente;
+
+    Grupo *n;
+    n = LG->inicio;
+    while(n != NULL){
+        printf("\n%i. %s", number, n->nombreGrupo);
+        n = n->grupoSiguiente;
         number++;
     }
+
     printf("\n%i. Volver...", number);
     int opGrupo;
     printf("\nIngrese el grupo alimenticion: ");
@@ -283,13 +314,11 @@ int menuSeleccionaGrupo(Grupo *G){
 /*
 Invoca un menú que facilita al usuario la eliminación de alimento ubicado en un grupo dado
 */
-void eliminarAlimento(ListaGrupos *LG){
+void eliminarAlimento(){
     system("cls");
     printf("--- ELIMINAR ALIMENTO ---\n");
-    Grupo *n;
-    n = LG->inicio;
-    int opGrupo = menuSeleccionaGrupo(n);
-    Grupo *grupoAlimenticio = obtenerGrupoEnPosicion(LG, opGrupo);
+    int opGrupo = menuSeleccionaGrupo();
+    Grupo *grupoAlimenticio = obtenerGrupoEnPosicion(opGrupo);
     ListaAlimentos *LA = grupoAlimenticio->listaAlimentos;
     imprimirListaALimentos(LA);
     char codigoAlimento[10];
@@ -323,4 +352,18 @@ void eliminarAlimento(ListaGrupos *LG){
     if(aux != NULL){
         free(aux);
     }
+}
+
+/*
+Precarga de valores iniciales de litas de intercambio
+*/
+void precargaDeDatos(){
+    ListaAlimentos *LA = listaAlimentosNueva();
+    crearGrupo("Lacteos", LA);
+    crearAlimento(LA, "Leche descremada", 1, "LAC01");
+    crearAlimento(LA, "Leche descremada deslactozada", 1, "LAC02");
+    crearAlimento(LA, "Leche evaporada descremada", 1, "LAC03");
+    crearAlimento(LA, "Yogurt 0% grasa", 1, "LAC04");
+    crearAlimento(LA, "Helado in line Dos Pinos", 1, "LAC05");
+    crearAlimento(LA, "Helado de vainilla light", 1, "LAC06");
 }
