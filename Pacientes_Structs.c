@@ -1,4 +1,8 @@
-typedef struct paciente{
+
+typedef struct Paciente Paciente;
+typedef struct ListaPacientes ListaPacientes;
+
+struct Paciente{
 	int cedula;
 	char nombre[50];
 	int diaNacimiento;
@@ -9,15 +13,14 @@ typedef struct paciente{
 	float estatura;
 	float indiceMasaCorporal;
 	float porcentajeGrasa;
+	float porcentajeMusculo;
 	int diaIngreso;
 	int mesIngreso;
 	int anoIngreso;
-	struct paciente *pacienteSiguiente;
 	PilaDieta *dieta;
-}paciente;
+	Paciente *pacienteSiguiente;
+};
 
-typedef struct recorrer{
-	int size;
-	paciente * front;
-	paciente * rear;
-}recorrer;
+struct ListaPacientes{
+	Paciente *inicio;
+};

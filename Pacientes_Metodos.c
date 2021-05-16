@@ -1,15 +1,41 @@
 
-recorrer *crearPaciente(recorrer * C);
-paciente *CrearNodo(int cedula,char nombre [50],int diaNacimiento,int mesNacimiento,int anoNacimiento,float pesoActual,float pesoMeta,float estatura,float indiceMasaCorporal,float porcentajeGrasa,int diaIngreso,int mesIngreso,int anoIngreso);
-recorrer *Insertar(recorrer * C, int cedula,char nombre [50],int diaNacimiento,int mesNacimiento,int anoNacimiento,float pesoActual,float pesoMeta,float estatura,float indiceMasaCorporal,float porcentajeGrasa,int diaIngreso,int mesIngreso,int anoIngreso);
-void ImprimirCola(recorrer *C);
-//recorrer *Eliminar(recorrer * C, char Auxiliar[30]);
-void ImprimirColaReducida(recorrer *C);
-paciente *buscar_paciente_por_cedula(recorrer *C, int cedula);
+ListaPacientes *listaPacientesNueva(void);
+void crearPaciente(void);
+void consultarPaciente(void);
+void actualizarPaciente(void);
+void eliminarPaciente(void);
+void verificarRelacionDietaMenuControl(void);
+void gestionPaciente(void);
+void menuSeleccionaPaciente(void);
+Paciente *buscar_paciente_por_cedula(int cedula);
 
-void gestionPaciente () 
+ListaPacientes *listaPacientesNueva(void)
 {
-	recorrer * C= crearPaciente(C);
+    ListaPacientes *L;
+    L = (ListaPacientes *) malloc(sizeof(ListaPacientes));
+    L->inicio = NULL;
+    return L;
+}
+
+void crearPaciente()
+{
+	system("cls");
+    printf("--- CREAR PACIENTE ---\n");
+	Paciente *n, *aux;
+    if(LP->inicio == NULL)
+    {
+        LP->inicio = (Paciente *) malloc(sizeof(Paciente));
+        aux = LP->inicio;
+    }else{
+        n = LP->inicio;
+        while(n!= NULL)
+        {
+            aux = n;
+            n = n->pacienteSiguiente;
+        }
+        aux->pacienteSiguiente = (Paciente *) malloc(sizeof(Paciente));
+        aux = aux->pacienteSiguiente;
+    }
 	int cedula;
 	char nombre [50];
 	int diaNacimiento;
@@ -20,212 +46,143 @@ void gestionPaciente ()
 	float estatura;
 	float indiceMasaCorporal;
 	float porcentajeGrasa;
+	float porcentajeMusculo;
 	int diaIngreso;
 	int mesIngreso;
 	int anoIngreso;
+	printf ("\nDigite el numero de cedula: ");
+	scanf("%i",&cedula);	
+	printf ("\nDigite su nombre: ");
+	scanf("%s",&nombre);
+	/* printf ("\nDigite su dia de nacimiento: ");
+	scanf ("%i",&diaNacimiento);
+	printf ("\nDigite su mes de nacimiento: ");
+	scanf ("%i",&mesNacimiento);
+	printf ("\nDigite su ano de nacimiento: ");
+	scanf ("%i",&anoNacimiento); */
+	printf ("\nDigite su peso actual ");
+	scanf ("%f",&pesoActual);
+	printf ("\nDigite su peso meta: ");
+	scanf ("%f",&pesoMeta);
+	printf ("\nDigite su estatura: ");
+	/* scanf ("%f",&estatura);
+	printf ("\nDigite su Indice de masa corporal: ");
+	scanf ("%f",&indiceMasaCorporal);
+	printf ("\nDigite su porcentaje de grasa: ");
+	scanf ("%f",&porcentajeGrasa);
+	printf ("\nDigite su porcentaje de musculo: ");
+	scanf ("%f",&porcentajeMusculo);
+	printf ("\nDigite su dia de ingreso: ");
+	scanf ("%i",&diaIngreso);
+	printf ("\nDigite su mes de ingreso: ");
+	scanf ("%i",&mesIngreso);
+	printf ("\nDigite su Ano de ingreso: ");
+	scanf ("%i",&anoIngreso); */
+
+	aux->cedula = cedula;
+	strcpy(aux->nombre,nombre);
+	/* aux->diaNacimiento = diaNacimiento;
+	aux->mesNacimiento = mesNacimiento;
+	aux->anoNacimiento = anoNacimiento;*/
+	aux->pesoActual = pesoActual;
+	aux->pesoMeta = pesoMeta;
+	/* aux->estatura = estatura;
+	aux->indiceMasaCorporal = indiceMasaCorporal;
+	aux->porcentajeGrasa = porcentajeGrasa;
+	aux->porcentajeMusculo = porcentajeMusculo;
+	aux->diaIngreso = diaIngreso;
+	aux->mesIngreso=mesIngreso;
+	aux->anoIngreso=anoIngreso;*/
+	aux->dieta = NULL;
+	aux->pacienteSiguiente = NULL;
+}
+
+void gestionPaciente(){
 	int opcion;
-
-	
-	printf ("\n Pacientes \n");
-	printf ("\n1. Agregar paciente.");
-	printf ("\n2. Modificar paciente.");
-	printf ("\n3. Consultar informacion de paciente.");
-	printf ("\n4. Salir.");
-	printf ("\n\nIngrese el numero de la accion que desea realizar:  ");
-	scanf ("%d", &opcion);
-	
-	while (opcion != 4)
+	while (opcion != 5)
 	{
-		
-		if (opcion == 1)
-		{
-		
-			printf ("\nDigite el numero de cedula");
-			scanf("%i",&cedula);	
-			printf ("Digite su nombre: ");
-			scanf("%s",&nombre);
-			printf ("Digite su dia de nacimiento: ");
-			scanf ("%i",&diaNacimiento);
-			printf ("Digite su mes de nacimiento: ");
-			scanf ("%i",&mesNacimiento);
-			printf ("Digite su ano de nacimiento: ");
-			scanf ("%i",&anoNacimiento);
-			printf ("Digite su peso actual ");
-			scanf ("%f",&pesoActual);
-			printf ("Digite su peso meta: ");
-			scanf ("%f",&pesoMeta);
-			printf ("Digite su estatura: ");
-			scanf ("%f",&estatura);
-			printf ("Digite su Indice de masa corporal: ");
-			scanf ("%f",&indiceMasaCorporal);
-			printf ("Digite su porcentaje de grasa: ");
-			scanf ("%f",&porcentajeGrasa);
-			printf ("Digite su dia de ingreso ");
-			scanf ("%i",&diaIngreso);
-			printf ("Digite su mes de ingreso ");
-			scanf ("%i",&mesIngreso);
-			printf ("Digite su Ano de ingreso: ");
-			scanf ("%i",&anoIngreso);
-			C= (Insertar(C,cedula,nombre,diaNacimiento,mesNacimiento,anoNacimiento,pesoActual,pesoMeta,estatura,indiceMasaCorporal,porcentajeGrasa,diaIngreso,mesIngreso,anoIngreso));
-		}
-		
-		else if (opcion == 2)
-		{
-			ImprimirCola(C);
-		}
+		system("cls");
+    	printf("--- MENU PACIENTES ---\n");
+		printf ("\n1. Agregar Paciente.");
+		printf ("\n2. Consultar Informacion del Paciente.");
+		printf ("\n3. Modificar Paciente.");
+		printf ("\n4. Eliminar Paciente.");
+		printf ("\n5. Volver.");
+		printf ("\n\nIngrese el numero de la accion que desea realizar:  ");
+		scanf ("%i", &opcion);
+		switch(opcion){
+            case 1:
+                crearPaciente();
+                break;
+            case 2:
+                menuSeleccionaPaciente();
+                break;
+            case 3:
 
-		else if (opcion == 3)
-		{
-			ImprimirColaReducida(C);
-			/*printf ("Digite el numero de cedula del paciente a consultar");   FUNCION PARA BUSCAR INCOMPLETA
-			scanf ("%i",&cedula);	
-			buscar(C);*/
-			
-		}
+                break;
+            case 4:
 
-		else
-		{
-			printf ("Opcion no valida...");	
-		}
-		
-		printf ("\n\nSi desea realizar otra accion ingrese el numero:  ");
-		scanf ("%d", &opcion);
+                break;
+        }
+		fflush(stdin);
+	}
+}
+
+void menuSeleccionaPaciente(){
+
+    Paciente *n;
+    n = LP->inicio;
+	system("cls");
+    printf("--- PACIENTES REGISTRADOS ---\n");
+    while(n != NULL){
+        printf("\n%i, %s", n->cedula, n->nombre);
+        n = n->pacienteSiguiente;
+    }
+
+    int cedulaPaciente;
+    printf("\n\nIngrese la cedula del paciente a consultar, o precione enter para regresar: ");
+    scanf("%i", &cedulaPaciente);
+	if(cedulaPaciente == NULL){
+		return;
+	}
+	n = buscar_paciente_por_cedula(cedulaPaciente);
+	if(n != NULL){
+		imprimirInfoPaciente(n);
 	}
 }
 
 
-
-
-//Crear cola
-
-recorrer * crearPaciente(recorrer * C)
+Paciente *buscar_paciente_por_cedula(int cedula)
 {
-	C= NULL;
-	C = (recorrer *) malloc(sizeof(recorrer));	
-	C-> front = NULL;
-	C-> rear = NULL;
-	return C;
+	Paciente *n;
+	n = LP->inicio;
+    while(n != NULL){
+        if(n->cedula == cedula)
+            return n;
+        n = n->pacienteSiguiente;
+    }
+	if(n == NULL){
+		system("cls");
+		printf ("\nERROR: No hay pacientes agregados con la cedula dada.");
+		printf("\n\nPrecione cualquier tecla para continuar... ");
+		fflush(stdin);
+    	getchar();
+	}
+	return n;
 }
 
-
-//Crear nodo
-
-paciente * CrearNodo(int cedula, char nombre [50], int diaNacimiento, int mesNacimiento, int anoNacimiento,float pesoActual,float pesoMeta,float estatura,float indiceMasaCorporal,float porcentajeGrasa,int diaIngreso,int mesIngreso,int anoIngreso)
-{
-	struct paciente *nuevo;
-	nuevo = (paciente *) malloc(sizeof(paciente));
-	nuevo-> pacienteSiguiente = NULL;
-	
-	nuevo->cedula=cedula;
-	strcpy(nuevo->nombre,nombre);
-	nuevo->diaNacimiento=diaNacimiento;
-	nuevo->mesNacimiento=mesNacimiento;
-	nuevo->anoNacimiento=anoNacimiento;
-	nuevo->pesoActual=pesoActual;
-	nuevo->pesoMeta=pesoMeta;
-	nuevo->estatura=estatura;
-	nuevo->indiceMasaCorporal=indiceMasaCorporal;
-	nuevo->porcentajeGrasa=porcentajeGrasa;
-	nuevo->diaIngreso=diaIngreso;
-	nuevo->mesIngreso=mesIngreso;
-	nuevo->anoIngreso=anoIngreso;		
-	nuevo->dieta = NULL;
-	return nuevo;
+void imprimirInfoPaciente(Paciente *P){
+    system("cls");
+    printf("--- PACIENTE ---\n");
+	printf("\n Nombre: %s", P->nombre);
+	printf("\n Cedula: %i", P->cedula);
+	printf("\n Peso Actual: %f", P->pesoActual);
+	printf("\n Peso Meta: %f", P->pesoMeta);
+	printf("\n\nPrecione cualquier tecla para continuar... ");
+    fflush(stdin);
+    getchar();
 }
 
-
-//Agregar
-
-recorrer * Insertar(recorrer * C, int cedula,char nombre [50],int diaNacimiento,int mesNacimiento,int anoNacimiento,float pesoActual,float pesoMeta,float estatura,float indiceMasaCorporal,float porcentajeGrasa,int diaIngreso,int mesIngreso,int anoIngreso)
-{
-	C->size = C-> size + 1;
-	if(C->front == NULL) 
-	{
-		C->front = CrearNodo(cedula,nombre,diaNacimiento,mesNacimiento,anoNacimiento,pesoActual,pesoMeta,estatura,indiceMasaCorporal,porcentajeGrasa,diaIngreso,mesIngreso,anoIngreso);
-		C->rear = C->front;
-		return C;
-	}
-	C->rear->pacienteSiguiente = CrearNodo(cedula,nombre,diaNacimiento,mesNacimiento,anoNacimiento,pesoActual,pesoMeta,estatura,indiceMasaCorporal,porcentajeGrasa,diaIngreso,mesIngreso,anoIngreso);
-	C->rear = C->rear->pacienteSiguiente;
-}
-
-
-//Imprimir cola
-
-void ImprimirCola(recorrer *C)
-{
-	paciente *i;
-	if (C -> front == NULL)
-	{
-		printf ("\nERROR: No hay pacientes agregados");
-	}
-	else
-	{
-		printf("\n\n pacientes \n");
-		for(i = C->front; i!= NULL; i = i->pacienteSiguiente)
-		{
-			printf("\ncedula: %i   nombre: %s   dia de Nacimiento: %i   mes de nacimiento: %i   Ano de nacimiento: %i   peso Actual: %f   peso Meta: %f   Estatura: %f   indice Masa corporal: %f   porcentaje de Grasa: %f   dia de Ingreso: %i   mes de Ingreso: %i   Ano de Ingreso: %i", i->cedula,i->nombre,i->diaNacimiento,i->mesNacimiento,i->anoNacimiento,i->pesoActual,i->pesoMeta,i->estatura,i->indiceMasaCorporal,i->porcentajeGrasa,i->diaIngreso,i->mesIngreso,i->anoIngreso);
-		}
-	}
-	printf("\n");
-}
-
-void ImprimirColaReducida(recorrer *C)  
-
-{
-	paciente *i;
-	if (C -> front == NULL)
-	{
-		printf ("\nERROR: No hay pacientes asignados");
-	}
-	else
-	{
-		printf("\n\n Pacientes: \n");
-		for(i = C->front; i!= NULL; i = i->pacienteSiguiente)
-		{
-			printf("\ncedula: %i   nombre: %s ", i->cedula,i->nombre);
-		}
-	}
-	printf("\n");
-}
-
-paciente *buscar_paciente_por_cedula(recorrer *C, int cedula)
-{
-	paciente *i;
-	int contador = 0;
-	if (C -> front == NULL)
-	{
-		printf ("\nERROR: No hay pacientes agregados");
-	}
-	else
-	{
-		for(i = C->front; i!= NULL; i = i->pacienteSiguiente)
-		{
-			if (i->cedula == cedula)
-			{
-				return i;
-			}
-		}	contador++;
-	}
-	return i;
-}
-
-				
-/* Eliminar elemento
-
-recorrer *Eliminar(recorrer * C, char Auxiliar[30])
-{
-	paciente *i;
-	recorrer *C2= CrearCola(C2);
-	for(i = C->front; i!= NULL; i = i->pacienteSiguiente)
-	{
-		if ((strcmp(i->nombre,Auxiliar)!=0))
-		{
-			C2= Insertar(C2,i->cedula,i->nombre,i->diaNacimiento,i->mesNacimiento,i->anoNacimiento,i->pesoActual,i->pesoMeta,i->estatura,i->indiceMasaCorporal,i->porcentajeGrasa,i->diaIngreso,i->mesIngreso,i->anoIngreso);
-		}
-	}
-	return C2;
-}*/
 
 
 

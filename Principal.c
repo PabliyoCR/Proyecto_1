@@ -9,6 +9,7 @@
 #include "Pacientes_Structs.c"
 
 ListaGrupos *LG = NULL;
+ListaPacientes *LP = NULL;
 
 // Definicion de metodos
 #include "GrupoAlimentos_Metodos.c"
@@ -21,6 +22,8 @@ ListaGrupos *LG = NULL;
 int main(void){
 
     LG = listaGruposNueva();
+    LP = listaPacientesNueva();
+
     precargaDeDatos();
 
     menuPrincipal();

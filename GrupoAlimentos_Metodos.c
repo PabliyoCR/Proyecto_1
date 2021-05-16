@@ -16,7 +16,6 @@ int menuSeleccionaGrupo(void);
 int verificaCodigoUnico(ListaAlimentos *LA, char *ptrCodigo);
 void precargaDeDatos(void);
 
-
 /*
 Crea una lista simple de alimentos
 */

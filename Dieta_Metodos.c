@@ -2,8 +2,14 @@
 
 
 //definicion de funciones
-//PilaDieta *crearDieta(int cedula);
-//Dieta consultarDietas(void);
+PilaDieta *pilaNueva(int cedula);
+Dieta* dietaNueva(void);
+Tiempo* tiempoNuevo(void);
+Porcion *porcionNueva(void);
+ListaTiempos *listaTiemposNueva(void);
+ListaPorciones *listaPorcionesNueva(void);
+void crearDieta(int cedula);
+Dieta consultarDietas(void);
 
 
 //Funciones en proceso
@@ -84,9 +90,9 @@ ListaPorciones *listaPorcionesNueva(void)
 //Funcion para crear Dietas-- Incompleta 
 void crearDieta(int cedula) // 
 {
-	paciente *ptr;
-	recorrer *C;
-	ptr= buscar_paciente_por_cedula(C,cedula);
+	Paciente *ptr;
+	ListaPacientes *C;
+	ptr= buscar_paciente_por_cedula(cedula);
 	
 	if (ptr->dieta==NULL){
 		ptr->dieta= pilaNueva(cedula);

@@ -14,7 +14,6 @@ struct Dieta
 	char tiempoComida; // Desayuno, Almuerzo, Merienda, Cena
 	ListaTiempos *listaTiempos; 
 	Dieta *dietaSiguiente; //para apuntar a la Dieta siguiente
-	
 };
 
 struct PilaDieta
