@@ -5,16 +5,16 @@ void crearGrupo(char nombre[100], ListaAlimentos *LA);
 void crearStructGrupo(ListaAlimentos *LA, Grupo *G, char nombre[100]);
 void crearAlimento(ListaAlimentos *LA, char nombre[100], float tamagnio, char codigo[10]);
 void crearStructAlimento(Alimento *A, char nombre[100], float tamagnio, char codigo[10]);
-void actualizarAlimento();
-void eliminarAlimento();
-void consultarAlimentosEnGrupo();
+void actualizarAlimento(void);
+void eliminarAlimento(void);
+void consultarAlimentosEnGrupo(void);
 void agregarDatosListaAlimentos(ListaAlimentos *LA);
 void imprimirListaALimentos(ListaAlimentos *LA);
 Grupo *obtenerGrupoEnPosicion(int posicion);
 Alimento *buscarAlimentoPorCodigo(Grupo *G, char *ptrCodigo);
-int menuSeleccionaGrupo();
+int menuSeleccionaGrupo(void);
 int verificaCodigoUnico(ListaAlimentos *LA, char *ptrCodigo);
-void precargaDeDatos();
+void precargaDeDatos(void);
 
 
 /*
