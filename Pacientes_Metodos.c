@@ -122,7 +122,7 @@ void gestionPaciente(){
                 imprimirInfoPaciente(menuSeleccionaPaciente());
                 break;
 			case 3:
-                //gestionDienta();
+                gestionDieta();
                 break;
             case 4:
 				actualizarPaciente();

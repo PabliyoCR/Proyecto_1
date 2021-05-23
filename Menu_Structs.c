@@ -4,7 +4,7 @@ typedef struct QueueMenu QueueMenu;
 
 struct Menu
 {
-    char RutaTXT[15];
+    char RutaTXT[300];
     Menu *next;
 };
 

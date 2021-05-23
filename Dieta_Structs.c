@@ -9,7 +9,7 @@ typedef struct ListaPorciones ListaPorciones;
 //Creaci�n de estructuras
 struct Dieta
 {
-	char fechaDieta; //fecha en la que se registra la dieta
+	char fechaDieta[10]; //fecha en la que se registra la dieta
 	float pesoActual;	//Peso actual del paciente
 	char tiempoComida; // Desayuno, Almuerzo, Merienda, Cena
 	ListaTiempos *listaTiempos; 

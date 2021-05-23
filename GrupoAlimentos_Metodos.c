@@ -365,4 +365,8 @@ void precargaDeDatos(){
     crearAlimento(LA, "Yogurt 0% grasa", 1, "LAC04");
     crearAlimento(LA, "Helado in line Dos Pinos", 1, "LAC05");
     crearAlimento(LA, "Helado de vainilla light", 1, "LAC06");
+
+    crearGrupo("Carnes", LA);
+
+    crearGrupo("Vegetales", LA);
 }
