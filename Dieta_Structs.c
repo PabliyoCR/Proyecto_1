@@ -40,6 +40,7 @@ struct Porcion
 	int cantidad;
 	Grupo *grupoAlimenticio;
 	Porcion *porcionSiguiente;
+	ListaAlimentos *alimentoPorcion;
 };
 
 struct ListaPorciones

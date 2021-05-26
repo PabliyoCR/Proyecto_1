@@ -96,22 +96,26 @@ void crearPaciente()
 	aux->mesIngreso=mesIngreso;
 	aux->anoIngreso=anoIngreso;*/
 	aux->pilaDieta = NULL;
+	aux->colaMenu = NULL;
+	aux->pilaControl = NULL;
 	aux->pacienteSiguiente = NULL;
 }
 
 // menu gestion de pacientes
 void gestionPaciente(){
 	int opcion;
-	while (opcion != 6)
+	while (opcion != 8)
 	{
 		system("cls");
     	printf("--- MENU PACIENTES ---\n");
 		printf ("\n1. Agregar Paciente.");
 		printf ("\n2. Consultar Informacion del Paciente.");
 		printf ("\n3. Gestionar dietas asociadas al Paciente.");
-		printf ("\n4. Modificar Paciente.");
-		printf ("\n5. Eliminar Paciente.");
-		printf ("\n6. Volver.");
+		printf ("\n4. Gestionar menus asociados al Paciente.");
+		printf ("\n5. Gestionar controles asociados al Paciente.");
+		printf ("\n6. Modificar Paciente.");
+		printf ("\n7. Eliminar Paciente.");
+		printf ("\n8. Volver.");
 		printf ("\n\nIngrese el numero de la accion que desea realizar:  ");
 		scanf ("%i", &opcion);
 		switch(opcion){
@@ -124,10 +128,16 @@ void gestionPaciente(){
 			case 3:
                 gestionDieta();
                 break;
-            case 4:
+			case 4:
+                gestionMenu();
+                break;
+			case 5:
+				gestionControl();
+                break;
+            case 6:
 				actualizarPaciente();
                 break;
-            case 5:
+            case 7:
 				eliminarPaciente();
                 break;
         }

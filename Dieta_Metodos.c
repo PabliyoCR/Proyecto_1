@@ -8,7 +8,7 @@ Tiempo* tiempoNuevo(ListaTiempos *LT);
 Porcion *porcionNueva(ListaPorciones *LPorciones);
 ListaTiempos *listaTiemposNueva(void);
 ListaPorciones *listaPorcionesNueva(void);
-void crearDieta(int cedula);
+void crearDieta(void);
 void consultarDietas(void);
 
 
@@ -84,6 +84,7 @@ Porcion *porcionNueva(ListaPorciones *LPorciones)
         nueva_AUX = nueva_AUX->porcionSiguiente;
     }
 	nueva_AUX->porcionSiguiente=NULL;
+	nueva_AUX->alimentoPorcion=NULL;
 
 	system("cls");
     printf("--- AGREGAR GRUPO ALIMENTICIO A ESTA PORCION ---\n");
@@ -118,73 +119,9 @@ ListaPorciones *listaPorcionesNueva(void)
 }
 
 
-
-
-
-//Funcion para crear Dietas-- Incompleta 
-/*void crearDieta(int cedula) // 
-{
-	Paciente *ptr;
-	ListaPacientes *C;
-	ptr= buscar_paciente_por_cedula(cedula);
-	
-	if (ptr->pilaDieta==NULL){
-		ptr->pilaDieta= pilaNueva(cedula);
-		
-		int cantidadTiempos;
-		printf("\nIndique cuantos tiempos de comida desea registrar: \n");
-		scanf("%d",&cantidadTiempos);
-		if (cantidadTiempos<3)
-		{
-			printf("\nLo sentimos los tiempos de comida deben ser minimo 3.\n");
-			return;
-		}
-		else if (cantidadTiempos>6)
-		{
-			printf("\nLo sentimos los tiempos de comida deben ser maximo 6.\n");
-			return;
-		}
-
-		Dieta *nueva= dietaNueva();
-		nueva->dietaSiguiente= ptr->pilaDieta->tope;
-		ptr->pilaDieta->tope= nueva;
-		ptr->pilaDieta->size= ptr->pilaDieta->size + 1;
-		return;
-	}
-	else
-	{
-		int cantidadTiempos;
-		printf("\nIndique cuantos tiempos de comida desea registrar: \n");
-		scanf("%d",&cantidadTiempos);
-		if (cantidadTiempos<3)
-		{
-			printf("\nLo sentimos los tiempos de comida deben ser minimo 3.\n");
-			return;
-		}
-		else if (cantidadTiempos>6)
-		{
-			printf("\nLo sentimos los tiempos de comida deben ser maximo 6.\n");
-			return;
-		}
-		
-		
-		Dieta *nueva= dietaNueva();
-		nueva->dietaSiguiente= ptr->pilaDieta->tope;
-		ptr->pilaDieta->tope= nueva;
-		ptr->pilaDieta->size= ptr->pilaDieta->size + 1;
-		return;
-	
-	}
-	
-	return;
-}*/
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void crearDieta_OPCIONAL(void){
+void crearDieta(void){
 
 	int cedula;
 	printf("\nIngrese el numero de cedula del paciente que desea crear la dieta: \n");
@@ -233,7 +170,7 @@ void crearDieta_OPCIONAL(void){
 		ListaPorciones *LPorciones = listaPorcionesNueva();
 		T->listaPorciones = LPorciones;
 		int cantidad;
-		printf("\nIndique cuantos grupos de alimentos que desea registrar en este tiempo: \n");
+		printf("\nIndique cuantas porciones desea registrar para este tiempo: \n");
 		scanf("%d",&cantidad);
 
 		int j = 0;
@@ -361,11 +298,10 @@ void gestionDieta(){
 		scanf ("%i", &opcion);
 		switch(opcion){
             case 1:
-             //   printf("\nHas Elejido Agregar/Crear Dieta.");
-                crearDieta_OPCIONAL();
+                crearDieta();
 				break;
             case 2:
-				//printf("\nHas Elejido Consultar Dietas de paciente.");
+				
                 consultarDietas();
 				break;
         }
@@ -373,44 +309,6 @@ void gestionDieta(){
 	}
 }
 
-
-
-
-
-//funcion main para probar las funciones 
-/* int main()
-{
-	PilaDieta *P;
-	int res;
-
-	P= pilaNueva();
-	
-	printf("\n****  PRUEBA PILA VACIA   ****\n");
-	res = isEmpty(P);
-	if(res == 1)
-		printf("\nLa pila esta vacia...\n");
-	else
-		printf("\nLa pila no esta vacia...\n");
-	
-	int p=124124;
-	char f= "14 de abril";
-	float pes= 50.5;
-	char tim= "Desayuno";
-	
-	push(P, p, f , pes , tim);
-	
-	printf("\n****  PRUEBA PILA VACIA   ****\n");
-	res = isEmpty(P);
-	if(res == 1)
-		printf("\nLa pila esta vacia...\n");
-	else
-		printf("\nLa pila no esta vacia...\n");
-	
-	mostrarPila(P);
-	
-	
-	return 0;
-} */
 
 
 

@@ -6,6 +6,8 @@
 // Declaracion de estructuras
 #include "GrupoAlimentos_Structs.c"
 #include "Dieta_Structs.c"
+#include "Menu_Structs.c"
+#include "Control_Structs.c"
 #include "Pacientes_Structs.c"
 
 // Listas Globales de Grupos de Alimentos y Pacientes
@@ -16,7 +18,8 @@ ListaPacientes *LP = NULL;
 #include "GrupoAlimentos_Metodos.c"
 #include "Pacientes_Metodos.c"
 #include "Dieta_Metodos.c"
-
+#include "Menu_Metodos.c"
+#include "Control_Metodos.c"
 // Menu de navegacion
 #include "Navegacion.c"
 

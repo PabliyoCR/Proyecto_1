@@ -19,8 +19,8 @@ struct Paciente{
 	int anoIngreso;
 
 	PilaDieta *pilaDieta;
-	//QueueMenu *menu;
-	//PilaControl *control
+	QueueMenu *colaMenu;
+	pilaControl *pilaControl;
 
 	Paciente *pacienteSiguiente;
 };

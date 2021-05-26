@@ -357,16 +357,66 @@ void eliminarAlimento(){
 Precarga de valores iniciales de litas de intercambio
 */
 void precargaDeDatos(){
-    ListaAlimentos *LA = listaAlimentosNueva();
-    crearGrupo("Lacteos", LA);
-    crearAlimento(LA, "Leche descremada", 1, "LAC01");
-    crearAlimento(LA, "Leche descremada deslactozada", 1, "LAC02");
-    crearAlimento(LA, "Leche evaporada descremada", 1, "LAC03");
-    crearAlimento(LA, "Yogurt 0% grasa", 1, "LAC04");
-    crearAlimento(LA, "Helado in line Dos Pinos", 1, "LAC05");
-    crearAlimento(LA, "Helado de vainilla light", 1, "LAC06");
+    ListaAlimentos *LA_Harinas_Cereales_Carbohidratos = listaAlimentosNueva();
+    crearGrupo("Harinas_Cereales_Carbohidratos", LA_Harinas_Cereales_Carbohidratos);
+    crearAlimento(LA_Harinas_Cereales_Carbohidratos, "Hojuelas de maiz", 1, "HCC01");
+    crearAlimento(LA_Harinas_Cereales_Carbohidratos, "Galletas de Maicena", 1, "HCC02");
+    crearAlimento(LA_Harinas_Cereales_Carbohidratos, "Tostadas de Trigo", 1, "HCC03");
+    crearAlimento(LA_Harinas_Cereales_Carbohidratos, "Pan de centeno", 1, "HCC04");
+    crearAlimento(LA_Harinas_Cereales_Carbohidratos, "Arroz integral", 1, "HCC05");
+    crearAlimento(LA_Harinas_Cereales_Carbohidratos, "Avena", 1, "HCC06");
 
-    crearGrupo("Carnes", LA);
+    ListaAlimentos *LA_lacteos = listaAlimentosNueva();
+    crearGrupo("Lacteos", LA_lacteos);
+    crearAlimento(LA_lacteos, "Leche descremada", 1, "LAC01");
+    crearAlimento(LA_lacteos, "Leche descremada deslactozada", 1, "LAC02");
+    crearAlimento(LA_lacteos, "Leche evaporada descremada", 1, "LAC03");
+    crearAlimento(LA_lacteos, "Yogurt 0% grasa", 1, "LAC04");
+    crearAlimento(LA_lacteos, "Helado in line Dos Pinos", 1, "LAC05");
+    crearAlimento(LA_lacteos, "Helado de vainilla light", 1, "LAC06");
 
-    crearGrupo("Vegetales", LA);
+    ListaAlimentos *LA_Carnes_Proteinas = listaAlimentosNueva();
+    crearGrupo("Carnes_Proteinas", LA_Carnes_Proteinas);
+    crearAlimento(LA_Carnes_Proteinas, "Pescado", 1, "CYP01");
+    crearAlimento(LA_Carnes_Proteinas, "Pollo", 1, "CYP02");
+    crearAlimento(LA_Carnes_Proteinas, "Huevo", 1, "CYP03");
+    crearAlimento(LA_Carnes_Proteinas, "Cerdo", 1, "CYP04");
+    crearAlimento(LA_Carnes_Proteinas, "Res", 1, "CYP05");
+    crearAlimento(LA_Carnes_Proteinas, "Mariscos", 1, "CYP06");
+
+    ListaAlimentos *LA_Frutas = listaAlimentosNueva();
+    crearGrupo("Frutas", LA_Frutas);
+    crearAlimento(LA_Frutas, "Manzana", 1, "FRU01");
+    crearAlimento(LA_Frutas, "Uva", 1, "FRU02");
+    crearAlimento(LA_Frutas, "kiwi", 1, "FRU03");
+    crearAlimento(LA_Frutas, "Arandanos", 1, "FRU04");
+    crearAlimento(LA_Frutas, "Naranja", 1, "FRU05");
+    crearAlimento(LA_Frutas, "Frambuesas", 1, "FRU06");
+
+    ListaAlimentos *LA_Grasas = listaAlimentosNueva();
+    crearGrupo("Grasas", LA_Grasas);
+    crearAlimento(LA_Grasas, "Leche", 1, "GRA01");
+    crearAlimento(LA_Grasas, "Almendras", 1, "GRA02");
+    crearAlimento(LA_Grasas, "Atun", 1, "GRA03");
+    crearAlimento(LA_Grasas, "Mayonesa", 1, "GRA04");
+    crearAlimento(LA_Grasas, "Natilla", 1, "GRA05");
+    crearAlimento(LA_Grasas, "Chocolate", 1, "GRA06");
+
+    ListaAlimentos *LA_Vegetales = listaAlimentosNueva();
+    crearGrupo("Vegetales", LA_Vegetales);
+    crearAlimento(LA_Vegetales, "Lechuga", 1, "VEG01");
+    crearAlimento(LA_Vegetales, "Brocoli", 1, "VEG02");
+    crearAlimento(LA_Vegetales, "Coliflor", 1, "VEG03");
+    crearAlimento(LA_Vegetales, "Ayote", 1, "VEG04");
+    crearAlimento(LA_Vegetales, "Yuca", 1, "VEG05");
+    crearAlimento(LA_Vegetales, "Chayote", 1, "VEG06");
+
+    ListaAlimentos *LA_Alimentos_Libres = listaAlimentosNueva();
+    crearGrupo("Alimentos_Libres", LA_Alimentos_Libres);
+    crearAlimento(LA_Alimentos_Libres, "Pizza", 1, "ALI01");
+    crearAlimento(LA_Alimentos_Libres, "Hamburgesa", 1, "ALI02");
+    crearAlimento(LA_Alimentos_Libres, "Tacos", 1, "ALI03");
+    crearAlimento(LA_Alimentos_Libres, "Papas Fritas", 1, "ALI04");
+    crearAlimento(LA_Alimentos_Libres, "Pollo frito", 1, "ALI05");
+    crearAlimento(LA_Alimentos_Libres, "Emparedado", 1, "ALI06");
 }
