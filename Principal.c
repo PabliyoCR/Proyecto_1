@@ -27,7 +27,6 @@ ListaPacientes *LP = NULL;
 #include "Navegacion.c"
 
 
-
 int main(void){
 
     LG = listaGruposNueva();

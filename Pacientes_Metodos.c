@@ -68,18 +68,18 @@ void crearPaciente()
 	
 	printf ("\nDigite su nombre: ");
 	scanf("%s",&nombre);
-	/* printf ("\nDigite su dia de nacimiento: ");
+	printf ("\nDigite su dia de nacimiento: ");
 	scanf ("%i",&diaNacimiento);
 	printf ("\nDigite su mes de nacimiento: ");
 	scanf ("%i",&mesNacimiento);
 	printf ("\nDigite su ano de nacimiento: ");
-	scanf ("%i",&anoNacimiento); */
+	scanf ("%i",&anoNacimiento);
 	printf ("\nDigite su peso actual: ");
 	scanf ("%f",&pesoActual);
 	printf ("\nDigite su peso meta: ");
 	scanf ("%f",&pesoMeta);
 	printf ("\nDigite su estatura: ");
-	/* scanf ("%f",&estatura);
+	scanf ("%f",&estatura);
 	printf ("\nDigite su Indice de masa corporal: ");
 	scanf ("%f",&indiceMasaCorporal);
 	printf ("\nDigite su porcentaje de grasa: ");
@@ -91,22 +91,22 @@ void crearPaciente()
 	printf ("\nDigite su mes de ingreso: ");
 	scanf ("%i",&mesIngreso);
 	printf ("\nDigite su Ano de ingreso: ");
-	scanf ("%i",&anoIngreso); */
+	scanf ("%i",&anoIngreso);
 
 	aux->cedula = cedula;
 	strcpy(aux->nombre,nombre);
-	/* aux->diaNacimiento = diaNacimiento;
+	aux->diaNacimiento = diaNacimiento;
 	aux->mesNacimiento = mesNacimiento;
-	aux->anoNacimiento = anoNacimiento;*/
+	aux->anoNacimiento = anoNacimiento;
 	aux->pesoActual = pesoActual;
 	aux->pesoMeta = pesoMeta;
-	/* aux->estatura = estatura;
+	aux->estatura = estatura;
 	aux->indiceMasaCorporal = indiceMasaCorporal;
 	aux->porcentajeGrasa = porcentajeGrasa;
 	aux->porcentajeMusculo = porcentajeMusculo;
 	aux->diaIngreso = diaIngreso;
 	aux->mesIngreso=mesIngreso;
-	aux->anoIngreso=anoIngreso;*/
+	aux->anoIngreso=anoIngreso;
 	aux->pilaDieta = NULL;
 	aux->colaMenu = NULL;
 	aux->pilaControl = NULL;
@@ -207,8 +207,14 @@ void imprimirInfoPaciente(Paciente *P){
     printf("--- PACIENTE ---\n");
 	printf("\n Nombre: %s", P->nombre);
 	printf("\n Cedula: %i", P->cedula);
-	printf("\n Peso Actual: %f", P->pesoActual);
-	printf("\n Peso Meta: %f", P->pesoMeta);
+	printf("\n Fecha de Nacimiento: %i/%i/%i", P->diaNacimiento, P->mesNacimiento, P->anoNacimiento);
+	printf("\n Peso Actual: %.2f", P->pesoActual);
+	printf("\n Peso Meta: %.2f", P->pesoMeta);
+	printf("\n Estatura: %.2f", P->estatura);
+	printf("\n Indice Masa corporal: %.2f", P->indiceMasaCorporal);
+	printf("\n Porcentaje Grasa: %.2f", P->porcentajeGrasa);
+	printf("\n Porcentaje Musculo: %.2f", P->porcentajeMusculo);
+	printf("\n Fecha de Ingreso: %i/%i/%i", P->diaIngreso, P->mesIngreso, P->anoIngreso);
 
 	// Ultima dieta asociada
 	Dieta *dietaImprimir;

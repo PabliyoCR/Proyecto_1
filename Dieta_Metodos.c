@@ -214,6 +214,7 @@ void consultarDietas()
 		return;
 	}
 
+	printf("\n\n *** Informacion Dietas ***");
 	for(dietaImprimir = paciente->pilaDieta->tope; dietaImprimir != NULL; dietaImprimir = dietaImprimir->dietaSiguiente)
 	{
 		printf("\n------Fecha de la Dieta: %s------------", dietaImprimir->fechaDieta);

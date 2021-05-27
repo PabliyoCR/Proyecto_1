@@ -46,7 +46,7 @@ control* crearControl(void)
 	scanf ("%f",&nuevo->porcentajeMusculoMeta);
 	printf ("Digite las observaciones: ");
 	scanf ("%s",&nuevo->observaciones);
-	printf ("Digite el email");
+	printf ("Digite el email: ");
 	scanf ("%s",&nuevo->email);
 	fflush(stdin);
 	return nuevo;
@@ -112,6 +112,7 @@ void consultarControl()
 
 	for(controlImprimir = paciente->pilaControl->tope ; controlImprimir != NULL; controlImprimir = controlImprimir->controlSiguiente)
 	{
+		printf("\n*** Detalle de Control ***\n");
 		printf("-----Dia de registro de control: %i------\n", controlImprimir->diaRegistro); 
 		printf("Mes  de registro de control: %i \n", controlImprimir->mesRegistro);
 		printf("Ano de registro de control: %i \n", controlImprimir->anoRegistro);

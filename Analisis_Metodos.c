@@ -1,7 +1,7 @@
 // Definición de funciones
 void topPacientesPeso(void);
 void topPacientesDietas(void);
-float promedioEdadPacientes(void);
+void promedioEdadPacientes(void);
 ListaTopPacientes *listaTopPacientesNueva(void);
 
 
@@ -48,7 +48,7 @@ float kilosPerdidos(int cedula)
 		primerPeso= pesoViejo->pesoActual;
 	}
 
-	float pesoPerdido= ultimoPeso-primerPeso;
+	float pesoPerdido = primerPeso - ultimoPeso;
 
 	return pesoPerdido;
 }
@@ -60,6 +60,7 @@ void topPacientesPeso(void)
 	Paciente *n = LP->inicio;
 	TopPaciente *m, *aux;
 	ListaTopPacientes *top = listaPacientesNueva();
+	printf("xxx\n");
 	while (n != NULL)
 	{	
 		TopPaciente *paciente = (TopPaciente *) malloc(sizeof(TopPaciente));
@@ -67,20 +68,17 @@ void topPacientesPeso(void)
 		paciente->data = kilosPerdidos(n->cedula);
 		paciente->cedulaPaciente = n->cedula;
 		paciente->topPacienteSiguiente = NULL;
-
 		m = top->inicio;
 		if(m == NULL)
 		{
 			top->inicio = paciente;
 		}
 		if(m != NULL){
-			if(m->topPacienteSiguiente == NULL){
-				if(n->pilaDieta->size > m->data){
-					top->inicio = paciente;
-					paciente->topPacienteSiguiente = m;
-					n = n->pacienteSiguiente;
-					continue;
-				}
+			if(kilosPerdidos(n->cedula) > kilosPerdidos(m->cedulaPaciente)){
+				top->inicio = paciente;
+				paciente->topPacienteSiguiente = m;
+				n = n->pacienteSiguiente;
+				continue;
 			}
 			while(m != NULL)
 			{
@@ -116,6 +114,7 @@ void topPacientesPeso(void)
 }
 
 
+
 void topPacientesDietas(void)
 {
 	Paciente *n = LP->inicio;
@@ -139,7 +138,7 @@ void topPacientesDietas(void)
 			top->inicio = paciente;
 		}
 		if(m != NULL){
-			if(m->topPacienteSiguiente == NULL && n->pilaDieta != NULL){
+			if(n->pilaDieta != NULL){
 				if(n->pilaDieta->size > m->data){
 					top->inicio = paciente;
 					paciente->topPacienteSiguiente = m;
@@ -182,29 +181,26 @@ void topPacientesDietas(void)
 
 
 
-float promedioEdadPacientes(void)
+void promedioEdadPacientes(void)
 {
-	Paciente *n, *aux;
-	n= LP->inicio;
-	aux= LP->inicio;
-	int cantidadPacientes=0;
-	int sumaEdades=0;
+	Paciente *n;
+	n = LP->inicio;
+	float cantidadPacientes=0;
+	int sumaEdades = 0;
 
 	while(n != NULL){
+		sumaEdades = sumaEdades + (2021 - n->anoNacimiento);
 		cantidadPacientes++;
         n = n->pacienteSiguiente;
     }
-	while(aux != NULL){
-		sumaEdades=sumaEdades+(2021-aux->anoNacimiento);
-   		n = n->pacienteSiguiente;
-    }
 
 	float promedio;
-	promedio= sumaEdades/cantidadPacientes;
+	promedio = sumaEdades/cantidadPacientes;
 
-	printf("\nEl promedio de edades de los pacientes registrados es de: %.1f",promedio);
-
-	return;
+	printf("\nEl promedio de edades de los pacientes registrados es de: %.1f", promedio);
+	printf("\n\nPresione enter para continuar... ");
+    fflush(stdin);
+    getchar();
 }
 
 
