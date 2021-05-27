@@ -23,6 +23,8 @@ ListaPacientes *LP = NULL;
 // Menu de navegacion
 #include "Navegacion.c"
 
+#include "Analisis.c"
+
 int main(void){
 
     LG = listaGruposNueva();

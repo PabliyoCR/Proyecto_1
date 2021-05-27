@@ -8,6 +8,7 @@ Paciente *buscar_paciente_por_cedula(int cedula);
 void imprimirInfoPaciente(Paciente *P);
 void actualizarPaciente(void);
 void eliminarPaciente(void);
+int verificarPacienteExistente(int cedula);
 
 // metodo para crear pacientes nuevos
 ListaPacientes *listaPacientesNueva(void)
@@ -23,6 +24,18 @@ void crearPaciente()
 {
 	system("cls");
     printf("--- CREAR PACIENTE ---\n");
+	int cedula;
+	printf ("\nDigite el numero de cedula: ");
+	scanf("%i",&cedula);
+
+	if(verificarPacienteExistente(cedula) == 1){
+		printf("\n El usuario con la cedula dada ya existe en los registros");
+		printf("\n\nPresione enter para continuar... ");
+		fflush(stdin);
+		getchar();
+		return;
+	}
+
 	Paciente *n, *aux;
     if(LP->inicio == NULL)
     {
@@ -38,7 +51,7 @@ void crearPaciente()
         aux->pacienteSiguiente = (Paciente *) malloc(sizeof(Paciente));
         aux = aux->pacienteSiguiente;
     }
-	int cedula;
+	
 	char nombre [50];
 	int diaNacimiento;
 	int mesNacimiento;
@@ -52,8 +65,7 @@ void crearPaciente()
 	int diaIngreso;
 	int mesIngreso;
 	int anoIngreso;
-	printf ("\nDigite el numero de cedula: ");
-	scanf("%i",&cedula);	
+	
 	printf ("\nDigite su nombre: ");
 	scanf("%s",&nombre);
 	/* printf ("\nDigite su dia de nacimiento: ");
@@ -179,7 +191,7 @@ Paciente *buscar_paciente_por_cedula(int cedula)
 	if(n == NULL){
 		system("cls");
 		printf ("\nERROR: No hay pacientes agregados con la cedula dada.");
-		printf("\n\nPrecione enter para continuar... ");
+		printf("\n\nPresione enter para continuar... ");
 		fflush(stdin);
     	getchar();
 	}
@@ -197,7 +209,42 @@ void imprimirInfoPaciente(Paciente *P){
 	printf("\n Cedula: %i", P->cedula);
 	printf("\n Peso Actual: %f", P->pesoActual);
 	printf("\n Peso Meta: %f", P->pesoMeta);
-	printf("\n\nPrecione enter para continuar... ");
+
+	// Ultima dieta asociada
+	Dieta *dietaImprimir;
+	Tiempo *tiempoImprimir;
+	Porcion *porcionImprimir;
+	if(P->pilaDieta != NULL){
+		dietaImprimir = P->pilaDieta->tope;
+		printf("\n\n--- Ultima dieta asociada ---");
+		printf("\n Fecha Dieta: %s", dietaImprimir->fechaDieta);
+		for(tiempoImprimir=dietaImprimir->listaTiempos->inicio; tiempoImprimir != NULL; tiempoImprimir = tiempoImprimir->tiempoSiguiente)
+		{
+			printf("\n---------------");
+			printf("\nNombre del tiempo de comida: %s",tiempoImprimir->nombreTiempo);
+			for(porcionImprimir = tiempoImprimir->listaPorciones->inicio; porcionImprimir != NULL; porcionImprimir = porcionImprimir->porcionSiguiente){
+				 printf("\nCantidad de porciones: %d \t Nombre del grupo alimenticio: %s",porcionImprimir->cantidad, porcionImprimir->grupoAlimenticio->nombreGrupo);
+			}
+		}
+	}
+
+	// Ultimo control realizado del paciente
+	control *controlImprimir;
+	if(P->pilaControl != NULL){
+		controlImprimir = P->pilaControl->tope;
+		printf("\n\n--- Ultimo control asociado ---");
+		printf("\n Fecha Control: %d/%d/%d", controlImprimir->diaRegistro, controlImprimir->mesRegistro, controlImprimir->anoRegistro);
+		printf("Peso actual %f \n", controlImprimir->pesoActual);
+		printf("Peso meta %f \n", controlImprimir->pesoMeta);
+		printf("Porcentaje de grasa actual %f \n", controlImprimir->porcentajeGrasaActual);
+		printf("Porcentaje de grasa meta %f \n", controlImprimir->porcentajeGrasaMeta);
+		printf("Porcentaje de musculo actual %f \n", controlImprimir->porcentajeMusculoActual);
+		printf("Porcentaje de musculo meta %f \n", controlImprimir->porcentajeMusculoMeta);
+		printf("Observaciones %s \n", controlImprimir->observaciones);
+		printf("Email %s \n", controlImprimir->email);
+	}
+
+	printf("\n\nPresione enter para continuar... ");
     fflush(stdin);
     getchar();
 }
@@ -248,13 +295,15 @@ void eliminarPaciente(){
         printf("ALERTA: El Paciente ingresado No Existe en los registros.");
         return;
     }
-	if(paciente->pilaDieta != NULL /* || paciente->menu != NULL || paciente->control != NULL */){
-		printf("ALERTA: Imposible eliminar Paciente porque tiene asociadas dietas, menus y controles.");
-		printf("\n\nPrecione enter para continuar... ");
+
+	if(paciente->pilaDieta != NULL || paciente->colaMenu != NULL || paciente->pilaControl != NULL){
+		printf("ALERTA: Imposible eliminar Paciente porque tiene asociadas dietas, menus o controles.");
+		printf("\n\nPresione enter para continuar... ");
 		fflush(stdin);
 		getchar();
         return;
 	}
+	
 	aux = LP->inicio;
 	if(aux != NULL){
         if(aux->pacienteSiguiente == NULL){
@@ -283,4 +332,16 @@ void eliminarPaciente(){
 	if(aux != NULL){
         free(aux);
     }
+}
+
+int verificarPacienteExistente(int cedula){
+	Paciente *n;
+	n = LP->inicio;
+	while (n != NULL)
+	{
+		if(n->cedula == cedula)
+			return 1;
+		n = n->pacienteSiguiente;
+	}
+	return 0;
 }

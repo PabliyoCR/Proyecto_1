@@ -22,7 +22,7 @@ void crearMenu(){
 
 	if(paciente->pilaDieta == NULL){
 		printf("El paciente no tiene dietas asociadas");
-		printf("\n\nPrecione enter para continuar... ");
+		printf("\n\nPresione enter para continuar... ");
     	fflush(stdin);
     	getchar();
 		return;
@@ -60,7 +60,7 @@ void crearMenu(){
 	Menu *menuTemp= newMenu(dietaRellenar);
 	enqueue(colaMenuTemp, menuTemp);
 
-	printf("\n\nPrecione enter para continuar... ");
+	printf("\n\nPresione enter para continuar... ");
     fflush(stdin);
     getchar();
 	return;	
@@ -155,6 +155,14 @@ void consultarMenus()
 	Porcion *porcionImprimir;
 	Alimento *alimento;
 
+	if(paciente->colaMenu == NULL){
+		printf("\nNo existen menus asociados al paciente");
+		printf("\n\nPresione enter para continuar... ");
+		fflush(stdin);
+		getchar();
+		return;
+	}
+
 	int pos = 0;
 	for(menuImprimir = paciente->colaMenu->front; menuImprimir != NULL; menuImprimir = menuImprimir->next){
 		printf("*** Menu %i ***\n", pos+1);
@@ -169,7 +177,7 @@ void consultarMenus()
 		}
 		pos++;
 	}
-	printf("\n\nPrecione enter para continuar... ");
+	printf("\n\nPresione enter para continuar... ");
     fflush(stdin);
     getchar();
 	return;	

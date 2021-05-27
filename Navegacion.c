@@ -16,7 +16,7 @@ void menuPrincipal(){
         if(op == 2)
             gestionPaciente();
         if(op == 3)
-            menuAnalisis();
+            analisisDeDatos();
         fflush(stdin);
     }   
 }
@@ -48,8 +48,4 @@ void menuListasDeIntercambio(){
         }
         fflush(stdin);
     }   
-}
-
-void menuAnalisis(){
-
 }

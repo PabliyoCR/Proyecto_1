@@ -12,8 +12,9 @@ void crearDieta(void);
 void consultarDietas(void);
 
 
-//Funciones en proceso
-
+//Función que resive de parametro de entrada un numero de cedula
+//La función retorna una Pila de tipo Dieta para ser utilizada luego en los structs de pacientes
+//La cedula debe estar en la lista de los pacientes para asignaserlo al paciente con dicha cedula.
 PilaDieta *pilaDietaNueva(int ced)
 {
 	PilaDieta *P;
@@ -24,6 +25,9 @@ PilaDieta *pilaDietaNueva(int ced)
 	return P;
 }
 
+//Función para crear dietas
+//No recibe parametros de entrada
+//La función retorna una Dieta con los datos ingresados en la función 
 Dieta* dietaNueva(void)
 {
 	Dieta *nuevo;
@@ -35,8 +39,6 @@ Dieta* dietaNueva(void)
 	scanf("%s",&nuevo->fechaDieta);
 	printf("\nIngrese el peso actual del paciente a registrar: \n");
 	scanf("%.1f",&nuevo->pesoActual);
-	/*printf("\nIngrese el tiempo de comida que desea registrar (Desayuno, Merienda, Almuerzo, otros): \n");
-	scanf("%s",&nuevo->tiempoComida);*/
 	fflush(stdin);
 	return nuevo;
 }
@@ -109,7 +111,6 @@ ListaTiempos *listaTiemposNueva(void)
 }
 
 
-
 ListaPorciones *listaPorcionesNueva(void)
 {
     ListaPorciones *L;
@@ -121,6 +122,7 @@ ListaPorciones *listaPorcionesNueva(void)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Función para Crear a dietas a un paciente en caso de que no tenga, y en caso de que si tenga dieta se procedera a crear una nueva y colocarla en el tope de pilas Dietas.
 void crearDieta(void){
 
 	int cedula;
@@ -154,16 +156,16 @@ void crearDieta(void){
 	int cantidadTiempos;
 	printf("\nIndique cuantos tiempos de comida desea registrar: \n");
 	scanf("%d",&cantidadTiempos);
-	if (cantidadTiempos<3)
+	
+	if (cantidadTiempos<3 || cantidadTiempos>6)
 	{
-		printf("\nLo sentimos los tiempos de comida deben ser minimo 3.\n");
+		printf("\nLo sentimos los tiempos de comida deben ser minimo 3 y maximo 6.\n");
+		printf("\n\nPresione enter para continuar... ");
+		fflush(stdin);
+		getchar();
 		return;
-	}
-	else if (cantidadTiempos>6)
-	{
-		printf("\nLo sentimos los tiempos de comida deben ser maximo 6.\n");
-		return;
-	}
+	}	
+
 	int i = 1;
 	while(i <= cantidadTiempos){
 		Tiempo *T = tiempoNuevo(LT);
@@ -182,21 +184,15 @@ void crearDieta(void){
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-//para esta funcion necesito info del codigo del paciente, para verificar la cedula en los pacientes. (proceso)
+//Función que imprime todas las dietas asociadas a un paciente por numero de cedula
 
 void consultarDietas()
 {
 	int cedula;
 	printf("\nIngrese el numero de cedula del paciente que desea consultar la dieta: \n");
 	scanf("%d",&cedula);
-
 
 	Paciente *paciente;
 	paciente= buscar_paciente_por_cedula(cedula);
@@ -206,85 +202,41 @@ void consultarDietas()
 		return;
 	}
 	
-
-
-/*	Dieta *dietaImprimir1, *dietaImprimir2;
-
-	for(dietaImprimir1=paciente->pilaDieta->tope; dietaImprimir1 != NULL; dietaImprimir1->dietaSiguiente)
-	{
-		printf("\nFecha de la Dieta: %s",dietaImprimir1->fechaDieta);
-		printf("\nPeso del paciente al ingreso de la Dieta: %f",dietaImprimir1->pesoActual);
-		for(dietaImprimir2=dietaImprimir1 ; dietaImprimir2->listaTiempos->inicio->tiempoSiguiente!=NULL; dietaImprimir2->listaTiempos->inicio->tiempoSiguiente)
-		{
-		}
-			printf("\nNombre del tiempo: %s ",dietaImprimir2->listaTiempos->inicio->nombreTiempo);
-	
-			printf("\nCantidad de porciones: %i",dietaImprimir2->listaTiempos->inicio->listaPorciones->inicio->cantidad);
-
-			printf("\nGrupo alimenticio: %s",dietaImprimir2->listaTiempos->inicio->listaPorciones->inicio->grupoAlimenticio->nombreGrupo);
-	} */
-
-	//
 	Dieta *dietaImprimir;
 	Tiempo *tiempoImprimir;
 	Porcion *porcionImprimir;
-	Grupo *grupoImprimir;
+
+	if(paciente->pilaDieta == NULL){
+		printf("\nNo existen dietas asociadas al paciente");
+		printf("\n\nPresione enter para continuar... ");
+		fflush(stdin);
+		getchar();
+		return;
+	}
 
 	for(dietaImprimir = paciente->pilaDieta->tope; dietaImprimir != NULL; dietaImprimir = dietaImprimir->dietaSiguiente)
 	{
-		printf("\nFecha de la Dieta: %s", dietaImprimir->fechaDieta);
+		printf("\n------Fecha de la Dieta: %s------------", dietaImprimir->fechaDieta);
 		printf("\nPeso del paciente al ingreso de la Dieta: %f",dietaImprimir->pesoActual);
 		for(tiempoImprimir=dietaImprimir->listaTiempos->inicio; tiempoImprimir != NULL; tiempoImprimir = tiempoImprimir->tiempoSiguiente)
 		{
-			printf("---------------\n");
+			printf("\n---------------");
 			printf("\nNombre del tiempo de comida: %s",tiempoImprimir->nombreTiempo);
 			for(porcionImprimir = tiempoImprimir->listaPorciones->inicio; porcionImprimir != NULL; porcionImprimir = porcionImprimir->porcionSiguiente){
 				 printf("\nCantidad de porciones: %d \t Nombre del grupo alimenticio: %s",porcionImprimir->cantidad, porcionImprimir->grupoAlimenticio->nombreGrupo);
 			}
 		}
 	}
-	printf("\n\nPrecione enter para continuar... ");
+	printf("\n\nPresione enter para continuar... ");
     fflush(stdin);
     getchar();
 	return;	
 }
 
 
-//funcion en proceso
-int mostrarDieta(const PilaDieta *P)
-{
-	Dieta *i;
-	printf("\nLa dieta del paciente consultado es: \n");
-	for (i=P->tope; i!= NULL; i->dietaSiguiente)
-	{
-		printf("%s",i->listaTiempos);
-	}
-}
-
-int isEmpty(PilaDieta *P)
-{
-	if(P->tope == NULL)
-		return 1;
-	else
-		return 0;
-}
 
 
-void mostrarPila(const PilaDieta *P)
-{
-	Dieta *i;
-	printf("La pila es: \n");
-	for(i = P->tope; i!= NULL; i = i->dietaSiguiente)
-//		printf("%s", i->fechaDieta);
-		printf("%.1f", i->pesoActual);
-//		printf("%s", i->tiempoComida);
-		//printf("%s", i->listaTiempos);
-	printf("\n");
-	printf("El tama?o de la pila es %d\n", P->size);
-}
-
-
-
+//Menu para gestionar las dietas en un n paciente. 
 void gestionDieta(){
 	int opcion;
 	while (opcion != 3)

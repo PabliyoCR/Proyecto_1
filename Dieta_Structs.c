@@ -11,7 +11,6 @@ struct Dieta
 {
 	char fechaDieta[10]; //fecha en la que se registra la dieta
 	float pesoActual;	//Peso actual del paciente
-	char tiempoComida; // Desayuno, Almuerzo, Merienda, Cena
 	ListaTiempos *listaTiempos; 
 	Dieta *dietaSiguiente; //para apuntar a la Dieta siguiente
 };
