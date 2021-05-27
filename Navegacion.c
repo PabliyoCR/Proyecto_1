@@ -1,6 +1,7 @@
 int op;
 int opListasIntercambio;
 
+// Menu de navegacion principal
 void menuPrincipal(){
     while(op != 4){
         system("cls");
@@ -21,6 +22,7 @@ void menuPrincipal(){
     }   
 }
 
+// Menu de navegacion de las listas de intercambio. Consulta, crea, actualiza o elimina.
 void menuListasDeIntercambio(){
     while(opListasIntercambio != 5){
         system("cls");

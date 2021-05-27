@@ -7,8 +7,8 @@ void enqueue(QueueMenu *C, Menu *M);
 void consultarMenus();
 Alimento *obtenerAlimentoEnPosicion(ListaAlimentos *LA, int pos);
 
+// Crea un menu y lo asigna a un paciente con dietas registradas previamente
 void crearMenu(){
-
 	int cedula;
 	printf("\nIngrese el numero de cedula del paciente: \n");
 	scanf("%d",&cedula);
@@ -28,6 +28,7 @@ void crearMenu(){
 		return;
 	}
 
+	// Punteros que necesitamos para iterar sobre cada dato de la dieta
 	Dieta *dietaRellenar = paciente->pilaDieta->tope;
 	Tiempo *tiempoRellenar;
 	Porcion *porcionRellenar;
@@ -67,7 +68,7 @@ void crearMenu(){
 
 }
 
-
+// Esta funcion retorna un alimento que coincida con un codigo dado
 Alimento *capturarAlimentoEnGrupoPorCodigo(Grupo *G, char codigo[10]){
 	Alimento *n;
 	n = G->listaAlimentos->inicio;
@@ -81,6 +82,7 @@ Alimento *capturarAlimentoEnGrupoPorCodigo(Grupo *G, char codigo[10]){
 	return n;
 }
 
+// Asigna un alimento registrado a una porción previamente registrada en la ultima dieta del paciente
 void asociarAlimentoAPorcion(Porcion *P, Alimento *A){
 	ListaAlimentos *LA;
 	if(P->alimentoPorcion == NULL){
@@ -104,6 +106,7 @@ void asociarAlimentoAPorcion(Porcion *P, Alimento *A){
     }
 }
 
+// Crea una cola de menus nueva. Se utiliza cola porque mas adelante en el codigo se necesita capturar el primer elemento ingresado
 QueueMenu *queueMenuNueva()
 {
     QueueMenu *Q;
@@ -113,6 +116,7 @@ QueueMenu *queueMenuNueva()
     return Q;
 }
 
+// Crea un puntero a un struct de tipo Menu
 Menu* newMenu(Dieta *D)
 {
 	Menu *nuevo;
@@ -122,6 +126,7 @@ Menu* newMenu(Dieta *D)
 	return nuevo;
 }
 
+// Sirve para agregar elementos al final de la cola
 void enqueue(QueueMenu *C, Menu *M)
 {
 	C->size = C->size + 1;
@@ -135,7 +140,7 @@ void enqueue(QueueMenu *C, Menu *M)
 	C->rear = C->rear->next;
 }
 
-
+//  Imprime en pantalla todos los datos de todos los menus asociados a un paciente
 void consultarMenus()
 {
 	int cedula;
@@ -150,6 +155,7 @@ void consultarMenus()
 		return;
 	}
 	
+	// Estos punteros se utilizan para capturar datos que se van a iterar en un bucle, para imprimir datos
 	Menu *menuImprimir;
 	Tiempo *tiempoImprimir;
 	Porcion *porcionImprimir;
@@ -183,6 +189,7 @@ void consultarMenus()
 	return;	
 }
 
+// Retorna un alimento en una posicion dada
 Alimento *obtenerAlimentoEnPosicion(ListaAlimentos *LA, int pos){
 	Alimento *n;
 	n = LA->inicio;
@@ -196,7 +203,7 @@ Alimento *obtenerAlimentoEnPosicion(ListaAlimentos *LA, int pos){
     return n;
 }
 
-
+// Crea un menu de navegacion en donde se da la opcion al usuario de agregar o consultar menus
 void gestionMenu(){
 	int opcion;
 	while (opcion != 3)

@@ -4,7 +4,7 @@ void topPacientesDietas(void);
 void promedioEdadPacientes(void);
 ListaTopPacientes *listaTopPacientesNueva(void);
 
-
+//Menu para seleccionar una opcion de analisis de datos.
 void analisisDeDatos(){
 	int opcion;
 	while (opcion != 4)
@@ -33,7 +33,7 @@ void analisisDeDatos(){
 }
 
 
-
+//Funcion para determinar cuantos kilos ha perdido un paciente tomando como base los controles realizados.
 float kilosPerdidos(int cedula)
 {
 	Paciente *pacienteKilos;
@@ -54,7 +54,8 @@ float kilosPerdidos(int cedula)
 }
 
 
-
+//Funcion imprime en pantalla los pacientes que más peso han disminuido, tomando en cuenta los datos obtenidos en "kilosPerdidos".
+// IMPORTANTE: Falta validar que el paciente tenga al menos un control registrado. Caso contrario, da error
 void topPacientesPeso(void)
 {
 	Paciente *n = LP->inicio;
@@ -63,17 +64,23 @@ void topPacientesPeso(void)
 	printf("xxx\n");
 	while (n != NULL)
 	{	
+		// Creacion de una estructura de top que se agregará a la lista de tops.
 		TopPaciente *paciente = (TopPaciente *) malloc(sizeof(TopPaciente));
+		// El nodo top copiara valores relevantes a tomar en cuenta al momento de evaluar
 		strcpy(paciente->nombrePaciente, n->nombre);
 		paciente->data = kilosPerdidos(n->cedula);
 		paciente->cedulaPaciente = n->cedula;
 		paciente->topPacienteSiguiente = NULL;
+
+		// el nodo m sirve para iterar sobre la lista de tops e insertar un nodo de tal forma ...
+		// ...que quede todo ordenado descendentemente
 		m = top->inicio;
 		if(m == NULL)
 		{
 			top->inicio = paciente;
 		}
 		if(m != NULL){
+			// Evalua si los kilos perdidos del paciente de turno (n) son mayores que el nodo top siguiente
 			if(kilosPerdidos(n->cedula) > kilosPerdidos(m->cedulaPaciente)){
 				top->inicio = paciente;
 				paciente->topPacienteSiguiente = m;
@@ -85,6 +92,8 @@ void topPacientesPeso(void)
 				aux = m;
 				m = m->topPacienteSiguiente;
 				if(m != NULL && n->pilaDieta != NULL){
+					// En caso que se cumpla esta condicion, se insertará el nuevo nodo (paciente) en medio de 2 nodos de la secuencia
+					// El nodo antecesor tiene mejor puntacion que el nodo sucesor
 					if(kilosPerdidos(n->cedula) < kilosPerdidos(aux->cedulaPaciente) && kilosPerdidos(n->cedula) > kilosPerdidos(m->cedulaPaciente)){
 						aux->topPacienteSiguiente = paciente;
 						paciente->topPacienteSiguiente = m;
@@ -99,6 +108,7 @@ void topPacientesPeso(void)
 		n = n->pacienteSiguiente;
 	}
 
+	// Lo siguiente imprime en pantalla el top de pacientes
 	int numTop = 1;
 	printf("\n *** Top Pacientes que mas han disminuido peso. ***");
 	for(m = top->inicio; m != NULL; m = m->topPacienteSiguiente){
@@ -114,7 +124,9 @@ void topPacientesPeso(void)
 }
 
 
-
+//Función que muestra en pantalla los pacientes que cuentan con mas dietas en todos los pacientes.
+// Su mecanica es muy similar a la funcion topPacientesPeso()
+// Varía al momento de evaluar cantidades de pilas dieta en lugar de peso perdido
 void topPacientesDietas(void)
 {
 	Paciente *n = LP->inicio;
@@ -180,7 +192,7 @@ void topPacientesDietas(void)
 }
 
 
-
+//Funcion para determinar el promedio de edad entre todos los pacientes.
 void promedioEdadPacientes(void)
 {
 	Paciente *n;
@@ -203,43 +215,7 @@ void promedioEdadPacientes(void)
     getchar();
 }
 
-
-
-void eliminarPacienteSinInfo(int cedula, ListaPacientes *LP2){
-	Paciente *paciente, *aux, *anterior;
-    paciente = buscar_paciente_por_cedula(cedula);
-
-	aux = LP2->inicio;
-	if(aux != NULL){
-        if(aux->pacienteSiguiente == NULL){
-            if(aux == paciente){
-                LP2->inicio = NULL;
-            }else{
-                aux == NULL;
-            }
-        }else{
-            while(aux != NULL){
-                if(aux == paciente){
-                    if(aux == LP2->inicio){
-                        LP2->inicio = aux->pacienteSiguiente;
-                        break;
-                    }else{
-                        anterior->pacienteSiguiente = aux->pacienteSiguiente;
-                        break;
-                    }
-                }else{
-                    anterior = aux;
-                    aux = aux->pacienteSiguiente;
-                }
-            }
-        }
-    }
-	if(aux != NULL){
-        free(aux);
-    }
-}
-
-
+// Crea una lista de Tops Nueva, ya sea de top pacientes con mas peso disminuido o top pacientes con mas dietas registradas
 ListaTopPacientes *listaTopPacientesNueva()
 {
     ListaTopPacientes *L;

@@ -36,6 +36,7 @@ void crearPaciente()
 		return;
 	}
 
+	// Estas lineas agregan un paciente a una lista de pacientes global
 	Paciente *n, *aux;
     if(LP->inicio == NULL)
     {
@@ -340,6 +341,9 @@ void eliminarPaciente(){
     }
 }
 
+// Esta funcion verifica si un paciente con la cedula dada ya se encuentra en los registros
+// Devuelve 1 en caso de que se encuentre una coincidencia
+// Devuelve 0 en caso contrario
 int verificarPacienteExistente(int cedula){
 	Paciente *n;
 	n = LP->inicio;

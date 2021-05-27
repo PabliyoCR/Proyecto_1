@@ -43,7 +43,8 @@ Dieta* dietaNueva(void)
 	return nuevo;
 }
 
-
+// Crea un struct de tipo tiempo y captura un puntero a esa direccion de memoria.
+// Pregunta al usuario El nombre del tiempo de comida que se desea ingresar
 Tiempo* tiempoNuevo(ListaTiempos *LT)
 {
 	Tiempo *nuevo, *nuevo_AUX;
@@ -62,12 +63,14 @@ Tiempo* tiempoNuevo(ListaTiempos *LT)
         nuevo_AUX = nuevo_AUX->tiempoSiguiente;
     }
 	nuevo_AUX->tiempoSiguiente=NULL;
-	printf("\nIngrese el tiempo de comida que desea registrar (Desayuno, Merienda, Almuerzo, otros): \n");
+	printf("\nIngrese el nombre del tiempo de comida que desea registrar (Desayuno, Merienda, Almuerzo, otros): \n");
 	scanf("%s",&nuevo_AUX->nombreTiempo);
 	fflush(stdin);
 	return nuevo_AUX;
 }
 
+//Funcion para crear una porcion nueva y asignarle espacio en memoria
+//Se le solicitara al usuario que indique al grupo de alimento que pertenece la porcion.
 Porcion *porcionNueva(ListaPorciones *LPorciones)
 {
 	Porcion *nueva, *nueva_AUX;
@@ -102,6 +105,7 @@ Porcion *porcionNueva(ListaPorciones *LPorciones)
     return nueva_AUX;
 }
 
+//Crea una lista de tiempos nueva para asignar a una dieta
 ListaTiempos *listaTiemposNueva(void)
 {
     ListaTiempos *L;
@@ -110,7 +114,7 @@ ListaTiempos *listaTiemposNueva(void)
     return L;
 }
 
-
+//Funcion que asigna espacio en memoria a una nueva variable de Lista de porciones
 ListaPorciones *listaPorcionesNueva(void)
 {
     ListaPorciones *L;
@@ -119,8 +123,6 @@ ListaPorciones *listaPorcionesNueva(void)
     return L;
 }
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Función para Crear a dietas a un paciente en caso de que no tenga, y en caso de que si tenga dieta se procedera a crear una nueva y colocarla en el tope de pilas Dietas.
 void crearDieta(void){
@@ -185,7 +187,6 @@ void crearDieta(void){
 }
 
 
-
 //Función que imprime todas las dietas asociadas a un paciente por numero de cedula
 
 void consultarDietas()
@@ -233,8 +234,6 @@ void consultarDietas()
     getchar();
 	return;	
 }
-
-
 
 
 //Menu para gestionar las dietas en un n paciente. 
