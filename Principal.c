@@ -9,6 +9,7 @@
 #include "Menu_Structs.c"
 #include "Control_Structs.c"
 #include "Pacientes_Structs.c"
+#include "Analisis_Structs.c"
 
 // Listas Globales de Grupos de Alimentos y Pacientes
 ListaGrupos *LG = NULL;
@@ -20,10 +21,12 @@ ListaPacientes *LP = NULL;
 #include "Dieta_Metodos.c"
 #include "Menu_Metodos.c"
 #include "Control_Metodos.c"
+#include "Analisis_Metodos.c"
+
 // Menu de navegacion
 #include "Navegacion.c"
 
-#include "Analisis.c"
+
 
 int main(void){
 

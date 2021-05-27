@@ -2,6 +2,7 @@
 void topPacientesPeso(void);
 void topPacientesDietas(void);
 float promedioEdadPacientes(void);
+ListaTopPacientes *listaTopPacientesNueva(void);
 
 
 void analisisDeDatos(){
@@ -53,110 +54,124 @@ float kilosPerdidos(int cedula)
 }
 
 
+
 void topPacientesPeso(void)
-{	
-	Paciente *n = LP->inicio, *m, *aux;
-	ListaPacientes *top = listaPacientesNueva();
+{
+	Paciente *n = LP->inicio;
+	TopPaciente *m, *aux;
+	ListaTopPacientes *top = listaPacientesNueva();
 	while (n != NULL)
-	{
+	{	
+		TopPaciente *paciente = (TopPaciente *) malloc(sizeof(TopPaciente));
+		strcpy(paciente->nombrePaciente, n->nombre);
+		paciente->data = kilosPerdidos(n->cedula);
+		paciente->cedulaPaciente = n->cedula;
+		paciente->topPacienteSiguiente = NULL;
+
 		m = top->inicio;
-		if(top->inicio == NULL)
+		if(m == NULL)
 		{
-			top->inicio = n;
-			aux = top->inicio;
+			top->inicio = paciente;
 		}
-		while(m != NULL)
-		{
-			aux = m;
-			m = m->pacienteSiguiente;
-			if(m != NULL){
-				if(kilosPerdidos(n->cedula) < kilosPerdidos(aux->cedula) && kilosPerdidos(n->cedula) > kilosPerdidos(m->cedula))
-				{
-					aux->pacienteSiguiente = n;
-					n->pacienteSiguiente = m;
-					break;
+		if(m != NULL){
+			if(m->topPacienteSiguiente == NULL){
+				if(n->pilaDieta->size > m->data){
+					top->inicio = paciente;
+					paciente->topPacienteSiguiente = m;
+					n = n->pacienteSiguiente;
+					continue;
 				}
 			}
-			m = m->pacienteSiguiente;
+			while(m != NULL)
+			{
+				aux = m;
+				m = m->topPacienteSiguiente;
+				if(m != NULL && n->pilaDieta != NULL){
+					if(kilosPerdidos(n->cedula) < kilosPerdidos(aux->cedulaPaciente) && kilosPerdidos(n->cedula) > kilosPerdidos(m->cedulaPaciente)){
+						aux->topPacienteSiguiente = paciente;
+						paciente->topPacienteSiguiente = m;
+						continue;
+					}
+				}
+			}
+			if(m == NULL){
+				aux->topPacienteSiguiente = paciente;
+			}
 		}
-		aux->pacienteSiguiente = n;
 		n = n->pacienteSiguiente;
 	}
 
 	int numTop = 1;
-	for(n = top->inicio; n != NULL; n = n->pacienteSiguiente){
+	printf("\n *** Top Pacientes que mas han disminuido peso. ***");
+	for(m = top->inicio; m != NULL; m = m->topPacienteSiguiente){
 		if (numTop <= 5)
 		{
-			printf("\n *** Top Pacientes que mas han disminuido peso. ***");
-			printf("%i. %s", numTop, n->nombre);
+			printf("\n%i. %s", numTop, m->nombrePaciente);
 		}
 		numTop++;
 	}
 	printf("\n\nPresione enter para continuar... ");
     fflush(stdin);
     getchar();
-	return;
 }
-
-
-
 
 
 void topPacientesDietas(void)
 {
-	Paciente *n = LP->inicio, *m, *aux;
-	ListaPacientes *top = listaPacientesNueva();
+	Paciente *n = LP->inicio;
+	TopPaciente *m, *aux;
+	ListaTopPacientes *top = listaPacientesNueva();
 	while (n != NULL)
-	{
-		Paciente *nuevo = (Paciente *) malloc(sizeof(Paciente));
-		strcpy(nuevo->nombre, n->nombre);
-		nuevo->pacienteSiguiente = NULL;
-		printf("llllllll");
-		PilaDieta *nuevaPilaDieta = (PilaDieta *) malloc(sizeof(PilaDieta));
-		nuevo->pilaDieta = nuevaPilaDieta;
-		nuevo->pilaDieta->size = n->pilaDieta->size;
-		printf("fffffff");
+	{	
+		TopPaciente *paciente = (TopPaciente *) malloc(sizeof(TopPaciente));
+		strcpy(paciente->nombrePaciente, n->nombre);
+		
+		if(n->pilaDieta != NULL){
+			paciente->data = n->pilaDieta->size;
+		}else{
+			paciente->data = 0;
+		}
+		paciente->topPacienteSiguiente = NULL;
 		m = top->inicio;
+
 		if(m == NULL)
 		{
-			top->inicio = n;
-			aux = top->inicio;
+			top->inicio = paciente;
 		}
 		if(m != NULL){
-			/* if(m->pacienteSiguiente == NULL){
-				if(n->pilaDieta->size > m->pilaDieta->size){
-					top->inicio = nuevo;
-					top->inicio->pacienteSiguiente = m;
+			if(m->topPacienteSiguiente == NULL && n->pilaDieta != NULL){
+				if(n->pilaDieta->size > m->data){
+					top->inicio = paciente;
+					paciente->topPacienteSiguiente = m;
+					n = n->pacienteSiguiente;
+					continue;
 				}
-			} */
-			printf("CCCC");
+			}
 			while(m != NULL)
 			{
-				printf("zzzz");
 				aux = m;
-				m = m->pacienteSiguiente;
-				if(m != NULL){
-					if(n->pilaDieta->size < aux->pilaDieta->size && n->pilaDieta->size > m->pilaDieta->size){
-						aux->pacienteSiguiente = nuevo;
-						nuevo->pacienteSiguiente = m;
-						break;
+				m = m->topPacienteSiguiente;
+				if(m != NULL && n->pilaDieta != NULL){
+					if(n->pilaDieta->size < aux->data && n->pilaDieta->size > m->data){
+						aux->topPacienteSiguiente = paciente;
+						paciente->topPacienteSiguiente = m;
+						continue;
 					}
 				}
 			}
-			printf("BBBBB");
 			if(m == NULL){
-				aux->pacienteSiguiente = n;
+				aux->topPacienteSiguiente = paciente;
 			}
 		}
 		n = n->pacienteSiguiente;
 	}
 
 	int numTop = 1;
-	for(n = top->inicio; n != NULL; n = n->pacienteSiguiente){
+	printf("\n *** Top Pacientes con mas dietas ***");
+	for(m = top->inicio; m != NULL; m = m->topPacienteSiguiente){
 		if (numTop <= 5)
 		{
-			printf("\n *** Top Pacientes con mas dietas ***");
-			printf("%i. %s", numTop, n->nombre);
+			printf("\n%i. %s", numTop, m->nombrePaciente);
 		}
 		numTop++;
 	}
@@ -226,4 +241,13 @@ void eliminarPacienteSinInfo(int cedula, ListaPacientes *LP2){
 	if(aux != NULL){
         free(aux);
     }
+}
+
+
+ListaTopPacientes *listaTopPacientesNueva()
+{
+    ListaTopPacientes *L;
+    L = (ListaTopPacientes *) malloc(sizeof(ListaTopPacientes));
+    L->inicio = NULL;
+    return L;
 }

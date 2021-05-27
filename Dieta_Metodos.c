@@ -38,7 +38,7 @@ Dieta* dietaNueva(void)
 	printf("\nIngrese la fecha en la que va a registrar esta Dieta: \n");
 	scanf("%s",&nuevo->fechaDieta);
 	printf("\nIngrese el peso actual del paciente a registrar: \n");
-	scanf("%.1f",&nuevo->pesoActual);
+	scanf("%f",&nuevo->pesoActual);
 	fflush(stdin);
 	return nuevo;
 }
@@ -217,7 +217,7 @@ void consultarDietas()
 	for(dietaImprimir = paciente->pilaDieta->tope; dietaImprimir != NULL; dietaImprimir = dietaImprimir->dietaSiguiente)
 	{
 		printf("\n------Fecha de la Dieta: %s------------", dietaImprimir->fechaDieta);
-		printf("\nPeso del paciente al ingreso de la Dieta: %f",dietaImprimir->pesoActual);
+		printf("\nPeso del paciente al ingreso de la Dieta: %.1f",dietaImprimir->pesoActual);
 		for(tiempoImprimir=dietaImprimir->listaTiempos->inicio; tiempoImprimir != NULL; tiempoImprimir = tiempoImprimir->tiempoSiguiente)
 		{
 			printf("\n---------------");
